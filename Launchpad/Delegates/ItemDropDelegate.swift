@@ -117,19 +117,22 @@ struct ItemDropDelegate: DropDelegate {
       let folderItem = AppGridItem.folder(folder)
       let adjustedTargetIndex = app1Index < app2Index ? app2Index - 1 : app2Index
 
-      if app1.page == app2.page {
-         let indices = [app1Index, app2Index].sorted(by: >)
-         for index in indices {
-            pages[app1.page].remove(at: index)
-         }
-         let insertIndex = min(adjustedTargetIndex, pages[app2.page].count)
-         pages[app2.page].insert(folderItem, at: insertIndex)
-      } else {
-         pages[app1.page].remove(at: app1Index)
-         pages[app2.page].remove(at: app2Index)
+      // Enhanced folder creation animation
+      DropAnimationHelper.performFolderCreation {
+         if app1.page == app2.page {
+            let indices = [app1Index, app2Index].sorted(by: >)
+            for index in indices {
+               pages[app1.page].remove(at: index)
+            }
+            let insertIndex = min(adjustedTargetIndex, pages[app2.page].count)
+            pages[app2.page].insert(folderItem, at: insertIndex)
+         } else {
+            pages[app1.page].remove(at: app1Index)
+            pages[app2.page].remove(at: app2Index)
 
-         let insertIndex = min(app2Index, pages[app2.page].count)
-         pages[app2.page].insert(folderItem, at: insertIndex)
+            let insertIndex = min(app2Index, pages[app2.page].count)
+            pages[app2.page].insert(folderItem, at: insertIndex)
+         }
       }
    }
 
@@ -150,7 +153,10 @@ struct ItemDropDelegate: DropDelegate {
       let updatedFolder = Folder(name: targetFolder.name, page: targetFolder.page, apps: updatedApps)
       let updatedFolderItem = AppGridItem.folder(updatedFolder)
 
-      pages[targetFolder.page][folderIndex] = updatedFolderItem
-      pages[app.page].remove(at: appIndex)
+      // Enhanced app-to-folder animation
+      DropAnimationHelper.performDelayedMove(delay: 0.1) {
+         pages[targetFolder.page][folderIndex] = updatedFolderItem
+         pages[app.page].remove(at: appIndex)
+      }
    }
 }

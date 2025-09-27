@@ -9,42 +9,79 @@ struct FolderDetailView: View {
     @State private var editingName = false
     @State private var draggedApp: AppInfo?
     @State private var isAnimatingIn = false
+    @State private var isAnimatingOut = false
+    @State private var dragHoverPosition: CGPoint?
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         if folder != nil {
             ZStack {
-                Color.clear
+                // Enhanced backdrop with liquid glass
+                Color.black.opacity(0.15)
+                    .background(.ultraThinMaterial, in: Rectangle())
+                    .ignoresSafeArea()
                     .contentShape(Rectangle())
                     .onDrop(
                         of: [.text],
-                        delegate: FolderRemoveDropDelegate(folder: Binding(get: { folder! }, set: { folder = $0 }), draggedApp: $draggedApp, onRemoveApp: addAppToPage)
+                        delegate: FolderRemoveDropDelegate(
+                            folder: Binding(get: { folder! }, set: { folder = $0 }), 
+                            draggedApp: $draggedApp, 
+                            onRemoveApp: addAppToPage
+                        )
                     )
                     .onTapGesture {
-                        saveFolder()
+                        withAnimation(.spring(response: 0.5, dampingFraction: 0.8, blendDuration: 0.2)) {
+                            saveFolder()
+                        }
                     }
-                
-                VStack(spacing: 24) {
+
+                VStack(spacing: 28) {
+                    // Enhanced header with liquid glass styling
                     HStack {
                         Spacer()
                         if editingName {
                             TextField(L10n.folderNamePlaceholder, text: Binding(get: { folder!.name }, set: { folder!.name = $0 }))
-                                .textFieldStyle(.roundedBorder)
+                                .textFieldStyle(.plain)
                                 .font(.title2)
                                 .fontWeight(.semibold)
                                 .multilineTextAlignment(.center)
-                                .onSubmit { editingName = false }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                        .fill(.thickMaterial)
+                                        .overlay {
+                                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                                        }
+                                }
+                                .onSubmit { 
+                                    withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                                        editingName = false 
+                                    }
+                                }
                         } else {
                             Text(folder!.name)
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                                .foregroundColor(colorScheme == .dark ? .white : .primary)
-                                .onTapGesture { editingName = true }
+                                .foregroundStyle(.primary)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background {
+                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                        .fill(.thinMaterial)
+                                        .opacity(0.8)
+                                }
+                                .onTapGesture { 
+                                    withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                                        editingName = true 
+                                    }
+                                }
                         }
                         Spacer()
                     }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 24)
+                    .padding(.horizontal, 32)
+                    .padding(.top, 32)
                     
                     GeometryReader { geo in
                         let layout = LayoutMetrics(size: geo.size, columns: settings.folderColumns, iconSize: settings.iconSize)
@@ -54,10 +91,15 @@ struct FolderDetailView: View {
                                 columns: GridLayoutUtility.createGridColumns(count: settings.folderColumns, cellWidth: layout.cellWidth, spacing: layout.spacing),
                                 spacing: layout.spacing
                             ) {
-                                ForEach(folder!.apps) { app in
+                                ForEach(folder!.apps.indices, id: \.self) { index in
+                                    let app = folder!.apps[index]
                                     AppIconView(app: app, layout: layout, isDragged: draggedApp?.id == app.id)
+                                        .scaleEffect(draggedApp?.id == app.id ? 1.1 : 1.0)
+                                        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: draggedApp?.id == app.id)
                                         .onDrag {
-                                            draggedApp = app
+                                            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                                                draggedApp = app
+                                            }
                                             return NSItemProvider(object: app.id.uuidString as NSString)
                                         }
                                         .onDrop(
@@ -68,25 +110,48 @@ struct FolderDetailView: View {
                                                 dropDelay: settings.dropDelay,
                                                 targetApp: app
                                             ))
+                                        .transition(.asymmetric(
+                                            insertion: .scale(scale: 0.8).combined(with: .opacity),
+                                            removal: .scale(scale: 1.2).combined(with: .opacity)
+                                        ))
                                 }
                             }
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 16)
+                        }
+                        .background {
+                            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                .fill(.thinMaterial)
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                        .stroke(.white.opacity(0.1), lineWidth: 0.5)
+                                }
                         }
                     }
                 }
-                .frame(width: 1200, height: 800)
-                .background(VisualEffectView(material: .hudWindow, blendingMode: .behindWindow).cornerRadius(16))
-                .shadow(
-                    color: colorScheme == .dark ? .black.opacity(0.5) : .black.opacity(0.2),
-                    radius: 30, x: 0, y: 15
-                )
-                .shadow(
-                    color: colorScheme == .dark ? .black.opacity(0.3) : .black.opacity(0.08),
-                    radius: 5, x: 0, y: 2
-                )
-                .scaleEffect(isAnimatingIn ? 1.0 : 0.9)
-                .opacity(isAnimatingIn ? 1.0 : 0.0)
+                .frame(width: 1240, height: 840)
+                .background {
+                    // Enhanced liquid glass container
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .fill(.thickMaterial)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                .fill(.white.opacity(0.1))
+                        }
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                                .stroke(.white.opacity(0.2), lineWidth: 1)
+                        }
+                        .shadow(color: .black.opacity(0.2), radius: 40, x: 0, y: 20)
+                        .shadow(color: .black.opacity(0.1), radius: 12, x: 0, y: 6)
+                }
+                .scaleEffect(isAnimatingOut ? 0.85 : (isAnimatingIn ? 1.0 : 0.8))
+                .opacity(isAnimatingOut ? 0.0 : (isAnimatingIn ? 1.0 : 0.0))
+                .blur(radius: isAnimatingOut ? 4 : 0)
                 .onAppear {
-                    withAnimation(.interpolatingSpring(stiffness: 300, damping: 25)) { isAnimatingIn = true }
+                    withAnimation(.spring(response: 0.6, dampingFraction: 0.7, blendDuration: 0.2)) { 
+                        isAnimatingIn = true 
+                    }
                 }
                 .onTapGesture { }
             }
@@ -98,9 +163,17 @@ struct FolderDetailView: View {
               let itemIndex = pages[pageIndex].firstIndex(where: { $0.id == folder!.id }) else {
             return
         }
-        let newFolder = Folder(name: folder!.name, page: folder!.page, apps: folder!.apps)
-        pages[pageIndex][itemIndex] = .folder(newFolder)
-        folder = nil
+        
+        // Animate out before saving
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.8, blendDuration: 0.1)) {
+            isAnimatingOut = true
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            let newFolder = Folder(name: folder!.name, page: folder!.page, apps: folder!.apps)
+            pages[pageIndex][itemIndex] = .folder(newFolder)
+            folder = nil
+        }
     }
     
     private func addAppToPage(app: AppInfo) {

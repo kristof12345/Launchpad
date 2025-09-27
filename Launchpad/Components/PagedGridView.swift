@@ -35,7 +35,7 @@ struct PagedGridView: View {
                         }
                     }
                     .offset(x: -CGFloat(currentPage) * geo.size.width + dragOffset)
-                    .animation(.interpolatingSpring(stiffness: 300, damping: 100), value: currentPage)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0.2), value: currentPage)
                     .onAppear(perform: setupEventMonitoring)
                     .onDisappear(perform: cleanupEventMonitoring)
                 } else {
@@ -75,7 +75,7 @@ struct PagedGridView: View {
             AppLauncher.launch(path: app.path)
         case .folder(let folder):
             selectedFolder = folder
-            withAnimation(.interpolatingSpring(stiffness: 300, damping: 30)) {}
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.1)) {}
         }
     }
     
@@ -176,7 +176,7 @@ struct PagedGridView: View {
     private func navigateToPreviousPage() {
         guard currentPage > 0 else { return }
         
-        withAnimation(.interpolatingSpring(stiffness: 300, damping: 100)) {
+        withAnimation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0.2)) {
             currentPage -= 1
         }
     }
@@ -184,7 +184,7 @@ struct PagedGridView: View {
     private func navigateToNextPage() {
         guard currentPage < pages.count - 1 else { return }
         
-        withAnimation(.interpolatingSpring(stiffness: 300, damping: 100)) {
+        withAnimation(.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0.2)) {
             currentPage += 1
         }
     }
