@@ -8,9 +8,9 @@ struct GridItemView: View {
   var body: some View {
     switch item {
     case .app(let app):
-      AppIconView(app: app, layout: layout, isDragged: isDragged)
+      AppIconView(app: app, layout: layout)
     case .folder(let folder):
-      FolderIconView(folder: folder, layout: layout, isDragged: isDragged)
+      FolderIconView(folder: folder, layout: layout)
     }
   }
 }

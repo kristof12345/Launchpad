@@ -40,8 +40,7 @@ struct SinglePageView: View {
                             ))
                     }
                 }
-                .padding(.horizontal, layout.hPadding)
-                .padding(.vertical, layout.vPadding)
+                .frame(width: layout.size.width, height: layout.size.height, alignment: .top)
         }
     }
 }

@@ -4,7 +4,6 @@ import SwiftUI
 struct FolderIconView: View {
     let folder: Folder
     let layout: LayoutMetrics
-    let isDragged: Bool
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
@@ -49,8 +48,5 @@ struct FolderIconView: View {
                 .multilineTextAlignment(.center)
                 .frame(width: layout.cellWidth)
         }
-        .scaleEffect(isDragged ? 0.8 : 1.0)
-        .opacity(isDragged ? 0.5 : 1.0)
-        .animation(.easeInOut(duration: 0.2), value: isDragged)
     }
 }

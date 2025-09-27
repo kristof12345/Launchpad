@@ -4,7 +4,6 @@ import SwiftUI
 struct AppIconView: View {
    let app: AppInfo
    let layout: LayoutMetrics
-   let isDragged: Bool
    
    var body: some View {
       VStack(spacing: 8) {
@@ -18,8 +17,5 @@ struct AppIconView: View {
             .multilineTextAlignment(.center)
             .frame(width: layout.cellWidth)
       }
-      .scaleEffect(isDragged ? 0.8 : 1.0)
-      .opacity(isDragged ? 0.5 : 1.0)
-      .animation(.easeInOut(duration: 0.2), value: isDragged)
    }
 }

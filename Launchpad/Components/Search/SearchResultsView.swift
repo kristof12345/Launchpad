@@ -15,15 +15,14 @@ struct SearchResultsView: View {
                     columns: GridLayoutUtility.createGridColumns(count: settings.columns, cellWidth: layout.cellWidth, spacing: layout.hSpacing),
                     spacing: layout.vSpacing) {
                         ForEach(apps) { app in
-                            AppIconView(app: app, layout: layout, isDragged: false)
+                            GridItemView(item: .app(app), layout: layout, isDragged: false)
                                 .onTapGesture {
                                     onItemTap(.app(app))
                                 }
                         }
                     }
-                    .padding(.horizontal, layout.hPadding)
-                    .padding(.vertical, layout.vPadding)
             }
+            .frame(width: layout.size.width, height: layout.size.height, alignment: .top)
         }
     }
 }

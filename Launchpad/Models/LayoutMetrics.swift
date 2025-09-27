@@ -2,6 +2,7 @@ import AppKit
 import SwiftUI
 
 struct LayoutMetrics {
+    let size: CGSize
     let hPadding: CGFloat
     let vPadding: CGFloat
     let hSpacing: CGFloat
@@ -11,6 +12,7 @@ struct LayoutMetrics {
     let fontSize: CGFloat
     
     init(size: CGSize, columns: Int, rows: Int, iconSize: Double) {
+        self.size = size
         self.iconSize = iconSize
 
         hPadding = size.width * 0.06

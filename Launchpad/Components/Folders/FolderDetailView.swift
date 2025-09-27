@@ -55,7 +55,7 @@ struct FolderDetailView: View {
                                 spacing: layout.vSpacing
                             ) {
                                 ForEach(folder!.apps) { app in
-                                    AppIconView(app: app, layout: layout, isDragged: draggedApp?.id == app.id)
+                                    AppIconView(app: app, layout: layout)
                                         .onDrag {
                                             draggedApp = app
                                             return NSItemProvider(object: app.id.uuidString as NSString)
