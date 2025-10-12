@@ -8,6 +8,8 @@ If you like this project and want to support further development:
 
 **[📥 Download Launchpad v1.5](https://github.com/kristof12345/Launchpad/releases/download/v1.5/Launchpad.app.zip)**
 
+> **🔒 Security Note**: On first launch, macOS may show a security warning because the app is not notarized. This is normal for apps distributed outside the App Store. Right-click the app and select "Open" to approve it. See [Security Information](Documentation/SECURITY.md) for details.
+
 ## ✨ Features
 
 ### 🎨 **Modern Design**
@@ -146,3 +148,22 @@ end tell
 - Inspired by macOS Launchpad
 - Built with SwiftUI and modern macOS APIs
 - Based on LaunchBack project
+
+## 🔧 Troubleshooting
+
+### "Cannot Open Because Developer Cannot Be Verified"
+If macOS prevents you from opening LaunchPad:
+1. **Right-click** on `Launchpad.app` in Applications
+2. Select **"Open"** from the menu
+3. Click **"Open"** in the security dialog
+4. Or use: `xattr -cr /Applications/Launchpad.app` in Terminal
+
+See the [Security Guide](Documentation/SECURITY.md) for more information.
+
+### App Appears But Layout Is Not Saved
+- Check System Settings > Privacy & Security for any blocked permissions
+- Ensure the app has permission to save preferences
+
+### Icons Not Showing
+- The app requires read access to `/Applications` and `/System/Applications`
+- Try relaunching the app
