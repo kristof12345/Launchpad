@@ -84,7 +84,8 @@ If you like this project and want to support further development:
 - **Scroll Sensitivity**: Configurable thresholds
 - **Scroll Debounce**: 0.0–3.0s for smooth navigation
 - **Start at Login**: Auto-launch on system startup
-- **Show Dock**: Toggle dock visibility
+- **Show Dock**: Toggle dock visibility independently
+- **Show Menu Bar**: Toggle menu bar visibility independently
 
 ### 💾 **Layout Management**
 - **Auto-save**: All changes saved automatically
