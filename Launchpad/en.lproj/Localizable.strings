@@ -27,6 +27,7 @@
 "page_scroll_debounce" = "Page Scroll Debounce";
 "page_scroll_threshold" = "Page Scroll Threshold";
 "show_dock" = "Show Dock";
+"show_menu_bar" = "Show Menu Bar";
 "start_at_login" = "Start at Login";
 "transparency" = "Transparency";
 

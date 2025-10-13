@@ -10,6 +10,7 @@ struct LaunchpadSettings: Codable, Equatable {
    var scrollDebounceInterval: TimeInterval
    var scrollActivationThreshold: Double
    var showDock: Bool
+   var showMenuBar: Bool
    var transparency: Double
    var startAtLogin: Bool
    var productKey: String
@@ -23,6 +24,7 @@ struct LaunchpadSettings: Codable, Equatable {
    static let defaultScrollDebounceInterval: TimeInterval = 0.8
    static let defaultScrollActivationThreshold: CGFloat = 80
    static let defaultShowDock = true
+   static let defaultShowMenuBar = false
    static let defaultTransparency: Double = 1.0
    static let defaultStartAtLogin = false
    static let defaultProductKey = ""
@@ -37,6 +39,7 @@ struct LaunchpadSettings: Codable, Equatable {
       scrollDebounceInterval: TimeInterval = defaultScrollDebounceInterval,
       scrollActivationThreshold: CGFloat = defaultScrollActivationThreshold,
       showDock: Bool = defaultShowDock,
+      showMenuBar: Bool = defaultShowMenuBar,
       transparency: Double = defaultTransparency,
       startAtLogin: Bool = defaultStartAtLogin,
       productKey: String = defaultProductKey
@@ -50,6 +53,7 @@ struct LaunchpadSettings: Codable, Equatable {
       self.scrollDebounceInterval = scrollDebounceInterval
       self.scrollActivationThreshold = scrollActivationThreshold
       self.showDock = showDock
+      self.showMenuBar = showMenuBar
       self.transparency = max(0.0, min(2.0, transparency))
       self.startAtLogin = startAtLogin
       self.productKey = productKey

@@ -13,6 +13,11 @@ struct FeaturesSettings: View {
             )
 
             SettingsToggle(
+               title: L10n.showMenuBar,
+               isOn: $settings.showMenuBar
+            )
+
+            SettingsToggle(
                title: L10n.startAtLogin,
                isOn: Binding(
                   get: { settings.startAtLogin },

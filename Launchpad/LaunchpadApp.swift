@@ -36,11 +36,12 @@ struct LaunchpadApp: App {
       appManager.loadGridItems(appsPerPage: settingsManager.settings.appsPerPage)
       isInitialized = true
 
+      // Handle menu bar visibility separately from dock
+      NSMenu.setMenuBarVisible(settingsManager.settings.showMenuBar)
+
+      // Subscribe to system events if dock is shown
       if(settingsManager.settings.showDock) {
          subscribeToSystemEvents()
-         NSMenu.setMenuBarVisible(true)
-      } else {
-         NSMenu.setMenuBarVisible(false)
       }
 
       if !settingsManager.settings.isActivated {

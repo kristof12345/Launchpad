@@ -27,6 +27,7 @@
 "page_scroll_debounce" = "Görgetés Késleltetés";
 "page_scroll_threshold" = "Görgetés Küszöb";
 "show_dock" = "Dock Megjelenítése";
+"show_menu_bar" = "Menüsor Megjelenítése";
 "start_at_login" = "Automatikus Indítás";
 "transparency" = "Átlátszóság";
 

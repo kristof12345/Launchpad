@@ -38,6 +38,7 @@ struct L10n {
     static let pageScrollDebounce = "page_scroll_debounce".localized
     static let pageScrollThreshold = "page_scroll_threshold".localized
     static let showDock = "show_dock".localized
+    static let showMenuBar = "show_menu_bar".localized
     static let startAtLogin = "start_at_login".localized
     static let transparency = "transparency".localized
     
