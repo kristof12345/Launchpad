@@ -5,6 +5,7 @@ struct FolderDetailView: View {
    @Binding var folder: Folder?
    let settings: LaunchpadSettings
    let onItemTap: (AppGridItem) -> Void
+   var onDismiss: (() -> Void)? = nil
 
    @State private var editingName = false
    @State private var draggedApp: AppInfo?
@@ -143,5 +144,8 @@ struct FolderDetailView: View {
       pages[pageIndex][itemIndex] = .folder(newFolder)
       folder = nil
       AppManager.shared.saveGridItems()
+      
+      // Restore window focus after dismissing folder
+      onDismiss?()
    }
 }

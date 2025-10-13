@@ -67,7 +67,8 @@ struct PagedGridView: View {
          pages: $pages,
          folder: $selectedFolder,
          settings: settings,
-         onItemTap: handleItemTap
+         onItemTap: handleItemTap,
+         onDismiss: restoreWindowFocus
       )
 
       PageDropZonesView(
@@ -217,5 +218,15 @@ struct PagedGridView: View {
    private func handleAppActivation(_ notification: Notification) {
       currentPage = 0;
       searchText = ""
+   }
+   
+   private func restoreWindowFocus() {
+      // Restore window focus after folder is dismissed
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+         if let window = NSApp.windows.first(where: { $0.isVisible && $0.level == .statusBar }) {
+            window.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+         }
+      }
    }
 }
