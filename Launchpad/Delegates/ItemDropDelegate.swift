@@ -3,6 +3,7 @@ import SwiftUI
 struct ItemDropDelegate: DropDelegate {
    @Binding var pages: [[AppGridItem]]
    @Binding var draggedItem: AppGridItem?
+   @Binding var folderPreviewTarget: AppGridItem?
    let dropDelay: Double
    let targetItem: AppGridItem
    let targetPage: Int
@@ -24,11 +25,17 @@ struct ItemDropDelegate: DropDelegate {
 
       AppManager.shared.saveGridItems()
       self.draggedItem = nil
+      self.folderPreviewTarget = nil
       return true
    }
 
    func dropEntered(info: DropInfo) {
       guard let draggedItem = draggedItem else { return }
+
+      // Show folder preview when dragging app onto another app
+      if case .app = draggedItem, case .app = targetItem, draggedItem.id != targetItem.id {
+         folderPreviewTarget = targetItem
+      }
 
       if draggedItem.page == targetItem.page {
          DropHelper.performDelayedMove(delay: dropDelay) {
@@ -52,6 +59,10 @@ struct ItemDropDelegate: DropDelegate {
 
          handlePageOverflow(targetPageIndex: targetItem.page)
       }
+   }
+
+   func dropExited(info: DropInfo) {
+      folderPreviewTarget = nil
    }
 
    private func handlePageOverflow(targetPageIndex: Int) {
@@ -94,13 +105,21 @@ struct ItemDropDelegate: DropDelegate {
             pages[app1.page].remove(at: index)
          }
          let insertIndex = min(adjustedTargetIndex, pages[app2.page].count)
-         pages[app2.page].insert(folderItem, at: insertIndex)
+         
+         // Animate folder creation
+         withAnimation(LaunchPadConstants.folderCreationAnimation) {
+            pages[app2.page].insert(folderItem, at: insertIndex)
+         }
       } else {
          pages[app1.page].remove(at: app1Index)
          pages[app2.page].remove(at: app2Index)
 
          let insertIndex = min(app2Index, pages[app2.page].count)
-         pages[app2.page].insert(folderItem, at: insertIndex)
+         
+         // Animate folder creation
+         withAnimation(LaunchPadConstants.folderCreationAnimation) {
+            pages[app2.page].insert(folderItem, at: insertIndex)
+         }
       }
    }
 

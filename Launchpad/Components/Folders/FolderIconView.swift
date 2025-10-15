@@ -6,7 +6,9 @@ struct FolderIconView: View {
    let layout: LayoutMetrics
    let isDragged: Bool
    let transparency: Double
-   @Environment(\.colorScheme) private var colorScheme    
+   @Environment(\.colorScheme) private var colorScheme
+   @State private var isAppearing = true
+   
    var body: some View {
       let gridSpacing: CGFloat = 1.5
       
@@ -50,8 +52,13 @@ struct FolderIconView: View {
             .multilineTextAlignment(.center)
             .frame(width: layout.cellWidth)
       }
-      .scaleEffect(isDragged ? 0.8 : 1.0)
-      .opacity(isDragged ? 0.5 : 1.0)
+      .scaleEffect(isDragged ? 0.8 : (isAppearing ? LaunchPadConstants.folderCreationScale : 1.0))
+      .opacity(isDragged ? 0.5 : (isAppearing ? 0.0 : 1.0))
       .animation(.easeInOut(duration: 0.2), value: isDragged)
+      .onAppear {
+         withAnimation(LaunchPadConstants.folderCreationAnimation) {
+            isAppearing = false
+         }
+      }
    }
 }

@@ -3,6 +3,7 @@ import SwiftUI
 struct SearchResultsView: View {
    let apps: [AppInfo]
    let settings: LaunchpadSettings
+   let launchingItem: AppGridItem?
    let onItemTap: (AppGridItem) -> Void
    
    var body: some View {
@@ -18,7 +19,7 @@ struct SearchResultsView: View {
                   spacing: layout.hSpacing
                ) {
                   ForEach(apps) { app in
-                     AppIconView(app: app, layout: layout, isDragged: false)
+                     AppIconView(app: app, layout: layout, isDragged: false, isLaunching: launchingItem?.id == app.id)
                         .onTapGesture {
                            onItemTap(.app(app))
                         }

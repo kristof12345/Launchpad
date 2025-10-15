@@ -7,6 +7,8 @@ enum LaunchPadConstants {
    static let springAnimation = Animation.interpolatingSpring(stiffness: 300, damping: 100)
    static let fadeAnimation = Animation.easeInOut(duration: 0.3)
    static let quickFadeAnimation = Animation.easeInOut(duration: 0.2)
+   static let appLaunchAnimation = Animation.interpolatingSpring(stiffness: 280, damping: 20).speed(1.5)
+   static let folderCreationAnimation = Animation.interpolatingSpring(stiffness: 320, damping: 25)
 
    // MARK: - Layout Constants
    static let folderPreviewSize = 9 // Maximum apps shown in folder preview (3x3 grid)
@@ -35,6 +37,9 @@ enum LaunchPadConstants {
    static let folderOpenOpacity: Double = 0.2
    static let draggedAppScale: CGFloat = 0.95
    static let draggedAppOpacity: Double = 0.7
+   static let appLaunchScale: CGFloat = 1.8
+   static let folderOutlineScale: CGFloat = 1.15
+   static let folderCreationScale: CGFloat = 0.5
 
    // MARK: - Activation Constants
    static let productKey = ""

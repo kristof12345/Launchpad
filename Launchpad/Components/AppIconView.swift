@@ -5,6 +5,7 @@ struct AppIconView: View {
    let app: AppInfo
    let layout: LayoutMetrics
    let isDragged: Bool
+   let isLaunching: Bool
    
    var body: some View {
       VStack(spacing: 8) {
@@ -21,8 +22,9 @@ struct AppIconView: View {
             .multilineTextAlignment(.center)
             .frame(width: layout.cellWidth)
       }
-      .scaleEffect(isDragged ? LaunchPadConstants.draggedItemScale : 1.0)
-      .opacity(isDragged ? LaunchPadConstants.draggedItemOpacity : 1.0)
+      .scaleEffect(isLaunching ? LaunchPadConstants.appLaunchScale : (isDragged ? LaunchPadConstants.draggedItemScale : 1.0))
+      .opacity(isLaunching ? 0.0 : (isDragged ? LaunchPadConstants.draggedItemOpacity : 1.0))
+      .animation(isLaunching ? LaunchPadConstants.appLaunchAnimation : LaunchPadConstants.quickFadeAnimation, value: isLaunching)
       .animation(LaunchPadConstants.quickFadeAnimation, value: isDragged)
    }
 }

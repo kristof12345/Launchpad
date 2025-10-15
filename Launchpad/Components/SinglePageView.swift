@@ -3,6 +3,8 @@ import SwiftUI
 struct SinglePageView: View {
    @Binding var pages: [[AppGridItem]]
    @Binding var draggedItem: AppGridItem?
+   @Binding var launchingItem: AppGridItem?
+   @Binding var folderPreviewTarget: AppGridItem?
    let pageIndex: Int
    let settings: LaunchpadSettings
    let isFolderOpen: Bool
@@ -18,7 +20,13 @@ struct SinglePageView: View {
                spacing: layout.hSpacing
             ) {
                ForEach(pages[pageIndex]) { item in
-                  GridItemView(item: item, layout: layout, isDragged: draggedItem?.id == item.id, transparency: settings.transparency
+                  GridItemView(
+                     item: item,
+                     layout: layout,
+                     isDragged: draggedItem?.id == item.id,
+                     transparency: settings.transparency,
+                     isLaunching: launchingItem?.id == item.id,
+                     showFolderPreview: folderPreviewTarget?.id == item.id
                   )
                   .opacity(isFolderOpen ? LaunchPadConstants.folderOpenOpacity : 1)
                   .onTapGesture { onItemTap(item)  }
@@ -31,6 +39,7 @@ struct SinglePageView: View {
                      delegate: ItemDropDelegate(
                         pages: $pages,
                         draggedItem: $draggedItem,
+                        folderPreviewTarget: $folderPreviewTarget,
                         dropDelay: settings.dropDelay,
                         targetItem: item,
                         targetPage: pageIndex,

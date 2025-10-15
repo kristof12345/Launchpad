@@ -37,7 +37,7 @@ struct FolderDetailView: View {
                         spacing: layout.vSpacing
                      ) {
                         ForEach(folder!.apps) { app in
-                           AppIconView(app: app, layout: layout, isDragged: draggedApp?.id == app.id)
+                           AppIconView(app: app, layout: layout, isDragged: draggedApp?.id == app.id, isLaunching: false)
                               .onTapGesture { onItemTap(.app(app))  }
                               .scaleEffect(draggedApp?.id == app.id ? LaunchPadConstants.draggedAppScale : 1.0)
                               .opacity(draggedApp?.id == app.id ? LaunchPadConstants.draggedAppOpacity : 1.0)
@@ -109,21 +109,21 @@ struct FolderDetailView: View {
    }
    
    private func performEntranceAnimation() {
-      withAnimation(.interpolatingSpring(stiffness: 280, damping: 22)) {
+      withAnimation(.interpolatingSpring(stiffness: 320, damping: 24)) {
          isAnimatingIn = true
       }
       
-      withAnimation(.easeOut(duration: 0.3)) {
+      withAnimation(.easeOut(duration: 0.25)) {
          opacity = 1.0
       }
       
-      withAnimation(.interpolatingSpring(stiffness: 300, damping: 25)) {
+      withAnimation(.interpolatingSpring(stiffness: 340, damping: 28)) {
          headerOffset = 0
       }
    }
    
    private func dismissWithAnimation() {
-      withAnimation(.easeIn(duration: 0.1)) {
+      withAnimation(.easeInOut(duration: 0.15)) {
          opacity = 0
          headerOffset = -20
          isAnimatingIn = false

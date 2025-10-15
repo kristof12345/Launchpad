@@ -12,6 +12,8 @@ struct PagedGridView: View {
    @State private var eventMonitor: Any?
    @State private var searchText = ""
    @State private var draggedItem: AppGridItem?
+   @State private var launchingItem: AppGridItem?
+   @State private var folderPreviewTarget: AppGridItem?
    @State private var selectedFolder: Folder?
 
    var body: some View {
@@ -29,6 +31,8 @@ struct PagedGridView: View {
                      SinglePageView(
                         pages: $pages,
                         draggedItem: $draggedItem,
+                        launchingItem: $launchingItem,
+                        folderPreviewTarget: $folderPreviewTarget,
                         pageIndex: pageIndex,
                         settings: settings,
                         isFolderOpen: selectedFolder != nil,
@@ -43,6 +47,7 @@ struct PagedGridView: View {
                SearchResultsView(
                   apps: filteredApps(),
                   settings: settings,
+                  launchingItem: launchingItem,
                   onItemTap: handleTap
                )
                .frame(width: geo.size.width, height: geo.size.height)
@@ -97,7 +102,10 @@ struct PagedGridView: View {
    private func handleTap(item: AppGridItem) {
       switch item {
       case .app(let app):
-         AppLauncher.launch(path: app.path)
+         launchingItem = item
+         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            AppLauncher.launch(path: app.path)
+         }
       case .folder(let folder):
          selectedFolder = folder
       }
