@@ -14,11 +14,20 @@ struct GridItemView: View {
          case .app(let app):
             AppIconView(app: app, layout: layout, isDragged: isDragged, isLaunching: isLaunching)
                .overlay(
-                  RoundedRectangle(cornerRadius: layout.iconSize * LaunchPadConstants.folderCornerRadiusMultiplier)
-                     .stroke(Color.accentColor, lineWidth: 3)
-                     .scaleEffect(showFolderPreview ? LaunchPadConstants.folderOutlineScale : 1.0)
-                     .opacity(showFolderPreview ? 0.8 : 0.0)
-                     .animation(LaunchPadConstants.quickFadeAnimation, value: showFolderPreview)
+                  ZStack {
+                     // Folder-like background
+                     RoundedRectangle(cornerRadius: layout.iconSize * LaunchPadConstants.folderCornerRadiusMultiplier)
+                        .fill(Color.accentColor.opacity(0.15))
+                        .scaleEffect(showFolderPreview ? LaunchPadConstants.folderOutlineScale : 1.0)
+                        .opacity(showFolderPreview ? LaunchPadConstants.folderOutlineOpacity : 0.0)
+                     
+                     // Folder outline
+                     RoundedRectangle(cornerRadius: layout.iconSize * LaunchPadConstants.folderCornerRadiusMultiplier)
+                        .stroke(Color.accentColor, lineWidth: 3)
+                        .scaleEffect(showFolderPreview ? LaunchPadConstants.folderOutlineScale : 1.0)
+                        .opacity(showFolderPreview ? LaunchPadConstants.folderOutlineOpacity : 0.0)
+                  }
+                  .animation(LaunchPadConstants.folderPreviewAnimation, value: showFolderPreview)
                )
          case .folder(let folder):
             FolderIconView(folder: folder, layout: layout, isDragged: isDragged, transparency: transparency)

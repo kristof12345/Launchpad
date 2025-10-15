@@ -38,7 +38,7 @@ struct ItemDropDelegate: DropDelegate {
       }
 
       if draggedItem.page == targetItem.page {
-         DropHelper.performDelayedMove(delay: dropDelay) {
+         DropHelper.performDelayedMove(delay: dropDelay, animation: LaunchPadConstants.itemRearrangeAnimation) {
             if self.draggedItem != nil {
                let fromIndex = pages[draggedItem.page].firstIndex(where: { $0.id == draggedItem.id })!
                let toIndex = pages[targetItem.page].firstIndex(where: { $0.id == targetItem.id })!
@@ -52,8 +52,10 @@ struct ItemDropDelegate: DropDelegate {
 
          let updatedItem = item.withUpdatedPage(targetPage)
 
-         pages[targetItem.page].insert(updatedItem, at: toIndex)
-         pages[draggedItem.page].remove(at: fromIndex)
+         withAnimation(LaunchPadConstants.smoothMoveAnimation) {
+            pages[targetItem.page].insert(updatedItem, at: toIndex)
+            pages[draggedItem.page].remove(at: fromIndex)
+         }
 
          self.draggedItem = updatedItem
 
@@ -73,11 +75,13 @@ struct ItemDropDelegate: DropDelegate {
 
          let updatedOverflowItem = overflowItem.withUpdatedPage(nextPageNumber)
 
-         if nextPageNumber >= pages.count {
-            pages.append([updatedOverflowItem])
-         } else {
-            pages[nextPageNumber].insert(updatedOverflowItem, at: 0)
-            handlePageOverflow(targetPageIndex: nextPageNumber)
+         withAnimation(LaunchPadConstants.smoothMoveAnimation) {
+            if nextPageNumber >= pages.count {
+               pages.append([updatedOverflowItem])
+            } else {
+               pages[nextPageNumber].insert(updatedOverflowItem, at: 0)
+               handlePageOverflow(targetPageIndex: nextPageNumber)
+            }
          }
       }
    }
@@ -140,7 +144,9 @@ struct ItemDropDelegate: DropDelegate {
       let updatedFolder = Folder(name: targetFolder.name, page: targetFolder.page, apps: updatedApps)
       let updatedFolderItem = AppGridItem.folder(updatedFolder)
 
-      pages[targetFolder.page][folderIndex] = updatedFolderItem
-      pages[app.page].remove(at: appIndex)
+      withAnimation(LaunchPadConstants.bounceAnimation) {
+         pages[targetFolder.page][folderIndex] = updatedFolderItem
+         pages[app.page].remove(at: appIndex)
+      }
    }
 }

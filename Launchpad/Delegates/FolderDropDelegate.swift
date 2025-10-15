@@ -17,7 +17,7 @@ struct FolderDropDelegate: DropDelegate {
    func dropEntered(info: DropInfo) {
       guard let draggedApp = draggedApp else { return }
 
-      DropHelper.performDelayedMove(delay: dropDelay) {
+      DropHelper.performDelayedMove(delay: dropDelay, animation: LaunchPadConstants.itemRearrangeAnimation) {
          if self.draggedApp != nil {
             let fromIndex = folder.apps.firstIndex(where: { $0.id == draggedApp.id })!
             let toIndex = folder.apps.firstIndex(where: { $0.id == targetApp.id })!

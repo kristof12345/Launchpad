@@ -55,11 +55,15 @@ struct DropZoneView: View {
                      .font(.system(size: 20, weight: .medium))
                      .foregroundColor(.accentColor)
                      .opacity(0.8 * transparency)
+                     .scaleEffect(isHovered ? 1.1 : 1.0)
+                     .animation(LaunchPadConstants.quickFadeAnimation.repeatForever(autoreverses: true), value: isHovered)
                   Spacer()
                }
                .padding(padding)
+               .transition(.scale.combined(with: .opacity))
             }
          }
+         .animation(LaunchPadConstants.quickFadeAnimation, value: shouldShowChevron)
          .onDrop(of: [.text], isTargeted: $isHovered) { _ in false }
          .onChange(of: isHovered) { _, newValue in
             handleHoverChange(newValue)

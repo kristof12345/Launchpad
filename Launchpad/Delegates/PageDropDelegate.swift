@@ -19,8 +19,10 @@ struct PageDropDelegate: DropDelegate {
    private func moveItemToEndOfPage(draggedItem: AppGridItem) {
       guard let (currentPageIndex, currentItemIndex) = findItemLocation(item: draggedItem) else { return }
       
-      pages[currentPageIndex].remove(at: currentItemIndex)
-      pages[targetPage].append(draggedItem.withUpdatedPage(targetPage))
+      withAnimation(LaunchPadConstants.smoothMoveAnimation) {
+         pages[currentPageIndex].remove(at: currentItemIndex)
+         pages[targetPage].append(draggedItem.withUpdatedPage(targetPage))
+      }
       
       handlePageOverflow(targetPageIndex: targetPage)
    }
@@ -41,11 +43,13 @@ struct PageDropDelegate: DropDelegate {
          
          let updatedOverflowItem = overflowItem.withUpdatedPage(nextPageNumber)
          
-         if nextPageNumber >= pages.count {
-            pages.append([updatedOverflowItem])
-         } else {
-            pages[nextPageNumber].insert(updatedOverflowItem, at: 0)
-            handlePageOverflow(targetPageIndex: nextPageNumber)
+         withAnimation(LaunchPadConstants.smoothMoveAnimation) {
+            if nextPageNumber >= pages.count {
+               pages.append([updatedOverflowItem])
+            } else {
+               pages[nextPageNumber].insert(updatedOverflowItem, at: 0)
+               handlePageOverflow(targetPageIndex: nextPageNumber)
+            }
          }
       }
    }

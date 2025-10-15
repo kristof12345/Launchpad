@@ -10,8 +10,10 @@ struct RemoveDropDelegate: DropDelegate {
       guard let draggedApp = draggedApp else { return false }
       
       if let index = folder.apps.firstIndex(where: { $0.id == draggedApp.id }) {
-         let removedApp = folder.apps.remove(at: index)
-         addAppToPage(app: removedApp)
+         withAnimation(LaunchPadConstants.quickFadeAnimation) {
+            let removedApp = folder.apps.remove(at: index)
+            addAppToPage(app: removedApp)
+         }
       }
       
       AppManager.shared.saveGridItems()
@@ -22,7 +24,9 @@ struct RemoveDropDelegate: DropDelegate {
    private func addAppToPage(app: AppInfo) {
       guard let pageIndex = pages.firstIndex(where: { page in page.contains(where: { $0.id == folder.id }) }) else { return }
       let updatedApp = AppInfo(name: app.name, icon: app.icon, path: app.path, page: pageIndex)
-      pages[pageIndex].append(.app(updatedApp))
+      withAnimation(LaunchPadConstants.smoothMoveAnimation) {
+         pages[pageIndex].append(.app(updatedApp))
+      }
       handlePageOverflow(pageIndex: pageIndex)
    }
    
@@ -31,11 +35,13 @@ struct RemoveDropDelegate: DropDelegate {
          let overflowItem = pages[pageIndex].removeLast()
          let nextPage = pageIndex + 1
          let updatedOverflowItem = overflowItem.withUpdatedPage(nextPage)
-         if nextPage >= pages.count {
-            pages.append([updatedOverflowItem])
-         } else {
-            pages[nextPage].insert(updatedOverflowItem, at: 0)
-            handlePageOverflow(pageIndex: nextPage)
+         withAnimation(LaunchPadConstants.smoothMoveAnimation) {
+            if nextPage >= pages.count {
+               pages.append([updatedOverflowItem])
+            } else {
+               pages[nextPage].insert(updatedOverflowItem, at: 0)
+               handlePageOverflow(pageIndex: nextPage)
+            }
          }
       }
    }

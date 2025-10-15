@@ -8,6 +8,7 @@ struct FolderIconView: View {
    let transparency: Double
    @Environment(\.colorScheme) private var colorScheme
    @State private var isAppearing = true
+   @State private var isHovered: Bool = false
    
    var body: some View {
       let gridSpacing: CGFloat = 1.5
@@ -40,21 +41,28 @@ struct FolderIconView: View {
          .frame(width: layout.iconSize, height: layout.iconSize)
          .clipShape(RoundedRectangle(cornerRadius: 16))
          .shadow(
-            color: colorScheme == .dark ? Color.black.opacity(0.6 * transparency) : Color.black.opacity(0.3 * transparency),
-            radius: 6, x: 0, y: 6
+            color: colorScheme == .dark ? Color.black.opacity((isHovered ? 0.7 : 0.6) * transparency) : Color.black.opacity((isHovered ? 0.4 : 0.3) * transparency),
+            radius: isHovered ? 8 : 6, x: 0, y: isHovered ? 8 : 6
          )
          .shadow(
             color: colorScheme == .dark ? Color.black.opacity(0.3 * transparency) : Color.black.opacity(0.1 * transparency),
             radius: 4, x: 0, y: 2
-         )           
+         )
+         .scaleEffect(isHovered && !isDragged ? 1.03 : 1.0)
+         .animation(LaunchPadConstants.quickFadeAnimation, value: isHovered)
          Text(folder.name)
             .font(.system(size: layout.fontSize))
             .multilineTextAlignment(.center)
             .frame(width: layout.cellWidth)
+            .opacity(isHovered && !isDragged ? 1.0 : 0.9)
+            .animation(LaunchPadConstants.quickFadeAnimation, value: isHovered)
       }
-      .scaleEffect(isDragged ? 0.8 : (isAppearing ? LaunchPadConstants.folderCreationScale : 1.0))
-      .opacity(isDragged ? 0.5 : (isAppearing ? 0.0 : 1.0))
-      .animation(.easeInOut(duration: 0.2), value: isDragged)
+      .scaleEffect(isDragged ? LaunchPadConstants.draggedItemScale : (isAppearing ? LaunchPadConstants.folderCreationScale : 1.0))
+      .opacity(isDragged ? LaunchPadConstants.draggedItemOpacity : (isAppearing ? 0.0 : 1.0))
+      .animation(LaunchPadConstants.quickFadeAnimation, value: isDragged)
+      .onHover { hovering in
+         isHovered = hovering
+      }
       .onAppear {
          withAnimation(LaunchPadConstants.folderCreationAnimation) {
             isAppearing = false

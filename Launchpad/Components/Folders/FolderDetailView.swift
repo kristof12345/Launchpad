@@ -41,9 +41,9 @@ struct FolderDetailView: View {
                               .onTapGesture { onItemTap(.app(app))  }
                               .scaleEffect(draggedApp?.id == app.id ? LaunchPadConstants.draggedAppScale : 1.0)
                               .opacity(draggedApp?.id == app.id ? LaunchPadConstants.draggedAppOpacity : 1.0)
-                              .animation(.easeOut(duration: 0.15), value: draggedApp?.id == app.id)
+                              .animation(LaunchPadConstants.quickFadeAnimation, value: draggedApp?.id == app.id)
                               .onDrag {
-                                 withAnimation(.easeOut(duration: 0.15)) {
+                                 withAnimation(LaunchPadConstants.quickFadeAnimation) {
                                     draggedApp = app
                                  }
                                  return NSItemProvider(object: app.id.uuidString as NSString)
@@ -109,21 +109,21 @@ struct FolderDetailView: View {
    }
    
    private func performEntranceAnimation() {
-      withAnimation(.interpolatingSpring(stiffness: 320, damping: 24)) {
+      withAnimation(.interpolatingSpring(stiffness: 360, damping: 26)) {
          isAnimatingIn = true
       }
       
-      withAnimation(.easeOut(duration: 0.25)) {
+      withAnimation(.easeOut(duration: 0.2)) {
          opacity = 1.0
       }
       
-      withAnimation(.interpolatingSpring(stiffness: 340, damping: 28)) {
+      withAnimation(.interpolatingSpring(stiffness: 380, damping: 30)) {
          headerOffset = 0
       }
    }
    
    private func dismissWithAnimation() {
-      withAnimation(.easeInOut(duration: 0.15)) {
+      withAnimation(LaunchPadConstants.quickFadeAnimation) {
          opacity = 0
          headerOffset = -20
          isAnimatingIn = false

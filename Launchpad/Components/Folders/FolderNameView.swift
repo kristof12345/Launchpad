@@ -33,9 +33,10 @@ struct FolderNameView: View {
                      DispatchQueue.main.async { nameFieldFocused = true }
                   }
                   .onSubmit {
-                     withAnimation(.easeOut(duration: 0.2)) { editingName = false }
+                     withAnimation(LaunchPadConstants.quickFadeAnimation) { editingName = false }
                      nameFieldFocused = false
                   }
+                  .transition(.scale.combined(with: .opacity))
             } else {
                Text(folder.name.isEmpty ? L10n.untitledFolder : folder.name )
                   .font(.title2.weight(.medium))
@@ -43,8 +44,9 @@ struct FolderNameView: View {
                   .padding(.horizontal, 16)
                   .padding(.vertical, 8)
                   .onTapGesture {
-                     withAnimation(.easeOut(duration: 0.2)) { editingName = true}
+                     withAnimation(LaunchPadConstants.quickFadeAnimation) { editingName = true}
                   }
+                  .transition(.scale.combined(with: .opacity))
             }
             Spacer()
          }

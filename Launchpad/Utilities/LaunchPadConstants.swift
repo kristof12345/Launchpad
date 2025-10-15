@@ -4,11 +4,16 @@ import SwiftUI
 enum LaunchPadConstants {
 
    // MARK: - Animation Constants
-   static let springAnimation = Animation.interpolatingSpring(stiffness: 300, damping: 100)
-   static let fadeAnimation = Animation.easeInOut(duration: 0.3)
-   static let quickFadeAnimation = Animation.easeInOut(duration: 0.2)
-   static let appLaunchAnimation = Animation.interpolatingSpring(stiffness: 280, damping: 20).speed(1.5)
-   static let folderCreationAnimation = Animation.interpolatingSpring(stiffness: 320, damping: 25)
+   static let springAnimation = Animation.interpolatingSpring(stiffness: 350, damping: 30)
+   static let fadeAnimation = Animation.easeInOut(duration: 0.25)
+   static let quickFadeAnimation = Animation.easeInOut(duration: 0.15)
+   static let appLaunchAnimation = Animation.interpolatingSpring(stiffness: 300, damping: 22).speed(1.6)
+   static let folderCreationAnimation = Animation.interpolatingSpring(stiffness: 380, damping: 28)
+   static let folderPreviewAnimation = Animation.interpolatingSpring(stiffness: 400, damping: 30)
+   static let bounceAnimation = Animation.interpolatingSpring(stiffness: 500, damping: 25)
+   static let hoverAnimation = Animation.easeOut(duration: 0.12)
+   static let itemRearrangeAnimation = Animation.interpolatingSpring(stiffness: 400, damping: 32)
+   static let smoothMoveAnimation = Animation.interpolatingSpring(stiffness: 360, damping: 28)
 
    // MARK: - Layout Constants
    static let folderPreviewSize = 9 // Maximum apps shown in folder preview (3x3 grid)
@@ -32,13 +37,14 @@ enum LaunchPadConstants {
    static let dropZoneWidth: CGFloat = 60
 
    // MARK: - Drag & Drop Constants
-   static let draggedItemScale: CGFloat = 0.8
-   static let draggedItemOpacity: Double = 0.5
+   static let draggedItemScale: CGFloat = 0.85
+   static let draggedItemOpacity: Double = 0.6
    static let folderOpenOpacity: Double = 0.2
-   static let draggedAppScale: CGFloat = 0.95
-   static let draggedAppOpacity: Double = 0.7
-   static let appLaunchScale: CGFloat = 1.8
-   static let folderOutlineScale: CGFloat = 1.15
+   static let draggedAppScale: CGFloat = 0.96
+   static let draggedAppOpacity: Double = 0.75
+   static let appLaunchScale: CGFloat = 1.0
+   static let folderOutlineScale: CGFloat = 1.25
+   static let folderOutlineOpacity: Double = 0.9
    static let folderCreationScale: CGFloat = 0.5
 
    // MARK: - Activation Constants
