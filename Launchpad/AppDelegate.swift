@@ -5,14 +5,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
    private var isCurrentlyHidden = true
 
    func applicationDidFinishLaunching(_ notification: Notification) {
-      // Replace the default window with our custom ResponsiveWindow
       if let window = NSApplication.shared.windows.first {
-         let responsiveWindow = ResponsiveWindow(
-            contentRect: window.frame,
-            styleMask: window.styleMask,
-            backing: .buffered,
-            defer: false
-         )
+         let responsiveWindow = ResponsiveWindow(contentRect: window.frame, styleMask: window.styleMask)
          
          responsiveWindow.contentView = window.contentView
          responsiveWindow.makeKeyAndOrderFront(nil)
