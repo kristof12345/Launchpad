@@ -9,9 +9,8 @@ struct LaunchpadApp: App {
    @State private var isInitialized = false
 
    var body: some Scene {
-      WindowGroup {
+      Window("Launchpad", id: "main") {
          ZStack {
-            WindowAccessor()
             PagedGridView(
                pages: $appManager.pages,
                showSettings: $showSettings,
@@ -27,7 +26,11 @@ struct LaunchpadApp: App {
          }
          .background(VisualEffectView(material: .fullScreenUI, blendingMode: .behindWindow))
          .onAppear(perform: initialize)
+         .ignoresSafeArea()
       }
+      .windowStyle(.hiddenTitleBar)
+      .windowResizability(.contentSize)
+      .defaultSize(width: NSScreen.main?.frame.width ?? 1920, height: NSScreen.main?.frame.height ?? 1080)
    }
 
    private func initialize() {
