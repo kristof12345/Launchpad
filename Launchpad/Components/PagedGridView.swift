@@ -114,6 +114,8 @@ struct PagedGridView: View {
             }
          case .category:
             return []
+         case .widget:
+            return []
          }
       }
    }
@@ -135,6 +137,9 @@ struct PagedGridView: View {
          selectedFolder = folder
       case .category(let category):
          selectedCategory = category
+      case .widget:
+         // Widgets don't have tap actions
+         break
       }
    }
 
