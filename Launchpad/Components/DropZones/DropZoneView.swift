@@ -47,6 +47,7 @@ struct DropZoneView: View {
       Rectangle()
          .fill(shouldShowChevron ? Color.accentColor.opacity(0.2 * transparency) : Color.clear)
          .frame(width: LaunchPadConstants.dropZoneWidth)
+         .glassEffect(shouldShowChevron ? .selected : .normal)
          .overlay(alignment: alignment) {
             if shouldShowChevron {
                VStack {
@@ -60,6 +61,7 @@ struct DropZoneView: View {
                .padding(padding)
             }
          }
+         .animation(.smooth(duration: 0.3), value: shouldShowChevron)
          .onDrop(of: [.text], isTargeted: $isHovered) { _ in false }
          .onChange(of: isHovered) { _, newValue in
             handleHoverChange(newValue)

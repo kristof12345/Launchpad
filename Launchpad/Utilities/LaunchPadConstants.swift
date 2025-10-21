@@ -4,9 +4,9 @@ import SwiftUI
 class LaunchPadConstants {
 
    // MARK: - Animation Constants
-   static let springAnimation = Animation.interpolatingSpring(stiffness: 300, damping: 100)
-   static let fadeAnimation = Animation.easeInOut(duration: 0.3)
-   static let quickFadeAnimation = Animation.easeInOut(duration: 0.2)
+   static let springAnimation = Animation.smooth(duration: 0.4, extraBounce: 0.1)
+   static let fadeAnimation = Animation.smooth(duration: 0.3)
+   static let quickFadeAnimation = Animation.smooth(duration: 0.2)
 
    // MARK: - Layout Constants
    static let folderPreviewSize = 9 // Maximum apps shown in folder preview (3x3 grid)

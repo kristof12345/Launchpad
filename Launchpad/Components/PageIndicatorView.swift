@@ -20,7 +20,8 @@ struct PageIndicatorView: View {
                )
                .frame(width: LaunchPadConstants.pageIndicatorSize, height: LaunchPadConstants.pageIndicatorSize)
                .scaleEffect(index == currentPage ? LaunchPadConstants.pageIndicatorActiveScale : 1.0)
-               .animation(.easeInOut(duration: 0.2), value: currentPage)
+               .glassEffect(index == currentPage ? .selected : .normal)
+               .animation(.smooth(duration: 0.3), value: currentPage)
                .onTapGesture {
                   withAnimation(LaunchPadConstants.springAnimation) {
                      currentPage = index

@@ -12,11 +12,6 @@ struct FolderIconView: View {
       
       VStack(spacing: 8) {
          ZStack {
-            RoundedRectangle(cornerRadius: layout.iconSize * LaunchPadConstants.folderCornerRadiusMultiplier)
-               .fill(colorScheme == .dark ? Color.black.opacity(0.3 * transparency) : Color.white.opacity(0.3 * transparency))
-               .background(RoundedRectangle(cornerRadius: layout.iconSize * 0.2).fill(.ultraThinMaterial))
-               .frame(width: layout.iconSize * LaunchPadConstants.folderSizeMultiplier, height: layout.iconSize * LaunchPadConstants.folderSizeMultiplier)
-            
             LazyVGrid(columns: GridLayoutUtility.createFlexibleGridColumns(count: 3, spacing: gridSpacing),spacing: gridSpacing) {
                ForEach(folder.previewApps) { app in
                   Image(nsImage: app.icon)
@@ -36,6 +31,7 @@ struct FolderIconView: View {
             .frame(width: layout.iconSize * 0.6, height: layout.iconSize * 0.6)
          }
          .frame(width: layout.iconSize, height: layout.iconSize)
+         .glassEffect()
          .clipShape(RoundedRectangle(cornerRadius: 16))
          .shadow(
             color: colorScheme == .dark ? Color.black.opacity(0.6 * transparency) : Color.black.opacity(0.3 * transparency),
@@ -52,6 +48,6 @@ struct FolderIconView: View {
       }
       .scaleEffect(isDragged ? 0.8 : 1.0)
       .opacity(isDragged ? 0.5 : 1.0)
-      .animation(.easeInOut(duration: 0.2), value: isDragged)
+      .animation(.smooth(duration: 0.2), value: isDragged)
    }
 }

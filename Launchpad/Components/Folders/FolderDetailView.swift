@@ -41,9 +41,9 @@ struct FolderDetailView: View {
                               .onTapGesture { onItemTap(.app(app))  }
                               .scaleEffect(draggedApp?.id == app.id ? LaunchPadConstants.draggedAppScale : 1.0)
                               .opacity(draggedApp?.id == app.id ? LaunchPadConstants.draggedAppOpacity : 1.0)
-                              .animation(.easeOut(duration: 0.15), value: draggedApp?.id == app.id)
+                              .animation(.smooth(duration: 0.15), value: draggedApp?.id == app.id)
                               .onDrag {
-                                 withAnimation(.easeOut(duration: 0.15)) {
+                                 withAnimation(.smooth(duration: 0.15)) {
                                     draggedApp = app
                                  }
                                  return NSItemProvider(object: app.id.uuidString as NSString)
@@ -65,37 +65,7 @@ struct FolderDetailView: View {
                .opacity(opacity)
             }
             .frame(width: LaunchPadConstants.settingsWindowWidth, height: LaunchPadConstants.settingsWindowHeight)
-            .background(
-               RoundedRectangle(cornerRadius: 20)
-                  .fill(.regularMaterial.opacity(0.75))
-                  .overlay(
-                     RoundedRectangle(cornerRadius: 20)
-                        .fill(
-                           LinearGradient(
-                              colors: [
-                                 Color.white.opacity((colorScheme == .dark ? 0.1 : 0.3) * settings.transparency),
-                                 Color.white.opacity(0.05 * settings.transparency)
-                              ],
-                              startPoint: .topLeading,
-                              endPoint: .bottomTrailing
-                           )
-                        )
-                  )
-                  .overlay(
-                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(
-                           LinearGradient(
-                              colors: [
-                                 Color.white.opacity((colorScheme == .dark ? 0.3 : 0.5) * settings.transparency),
-                                 Color.white.opacity(0.1 * settings.transparency)
-                              ],
-                              startPoint: .topLeading,
-                              endPoint: .bottomTrailing
-                           ),
-                           lineWidth: 1
-                        )
-                  )
-            )
+            .glassEffect()
             .shadow(color: .black.opacity(0.15 * settings.transparency), radius: 40, x: 0, y: 20)
             .shadow(color: .black.opacity(0.1 * settings.transparency), radius: 10, x: 0, y: 5)
             .scaleEffect(isAnimatingIn ? 1.0 : 0.85)
@@ -109,21 +79,21 @@ struct FolderDetailView: View {
    }
    
    private func performEntranceAnimation() {
-      withAnimation(.interpolatingSpring(stiffness: 280, damping: 22)) {
+      withAnimation(.smooth(duration: 0.4, extraBounce: 0.1)) {
          isAnimatingIn = true
       }
       
-      withAnimation(.easeOut(duration: 0.3)) {
+      withAnimation(.smooth(duration: 0.3)) {
          opacity = 1.0
       }
       
-      withAnimation(.interpolatingSpring(stiffness: 300, damping: 25)) {
+      withAnimation(.smooth(duration: 0.4, extraBounce: 0.1)) {
          headerOffset = 0
       }
    }
    
    private func dismissWithAnimation() {
-      withAnimation(.easeIn(duration: 0.1)) {
+      withAnimation(.smooth(duration: 0.2)) {
          opacity = 0
          headerOffset = -20
          isAnimatingIn = false

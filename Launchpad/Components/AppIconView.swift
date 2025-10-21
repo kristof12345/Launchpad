@@ -23,6 +23,6 @@ struct AppIconView: View {
       }
       .scaleEffect(isDragged ? LaunchPadConstants.draggedItemScale : 1.0)
       .opacity(isDragged ? LaunchPadConstants.draggedItemOpacity : 1.0)
-      .animation(LaunchPadConstants.quickFadeAnimation, value: isDragged)
+      .animation(.smooth(duration: 0.2), value: isDragged)
    }
 }

@@ -13,12 +13,11 @@ struct CategoryFilterButton: View {
             .fontWeight(isSelected ? .semibold : .regular)
             .padding(.horizontal, 16)
             .padding(.vertical, 4)
-            .background(
-               RoundedRectangle(cornerRadius: 6)
-                  .fill(isSelected ? Color.accentColor.opacity(0.8 * transparency) : Color.primary.opacity(0.1 * transparency))
-            )
             .foregroundColor(isSelected ? .white : .primary)
       }
       .buttonStyle(.plain)
+      .glassEffect(isSelected ? .selected : .normal)
+      .hoverEffect()
+      .animation(.smooth(duration: 0.3), value: isSelected)
    }
 }

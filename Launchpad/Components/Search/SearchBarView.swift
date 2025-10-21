@@ -23,13 +23,11 @@ struct SearchBarView: View {
                   .font(.system(size: 16, weight: .medium))
                   .foregroundColor(.white)
                   .frame(width: 36, height: 36)
-                  .background(
-                     Circle()
-                        .fill(Color(NSColor.windowBackgroundColor).opacity(0.4 * transparency))
-                  )
-                  .shadow(color: Color.black.opacity(0.2 * transparency), radius: 10, x: 0, y: 3)
             }
             .buttonStyle(.plain)
+            .glassEffect()
+            .hoverEffect()
+            .shadow(color: Color.black.opacity(0.2 * transparency), radius: 10, x: 0, y: 3)
             .popover(isPresented: $showSortMenu, arrowEdge: .bottom) {
                VStack(alignment: .leading, spacing: 0) {
                   ForEach(SortOrder.allCases, id: \.self) { order in
@@ -59,8 +57,9 @@ struct SearchBarView: View {
                         )
                      }
                      .buttonStyle(SortMenuItemButtonStyle())
+                     .hoverEffect()
                      .onHover { hovering in
-                        withAnimation(.easeInOut(duration: 0.12)) {
+                        withAnimation(.smooth(duration: 0.12)) {
                            hoveredItem = hovering ? order : nil
                         }
                      }
@@ -93,16 +92,14 @@ struct SearchBarView: View {
                      .font(.system(size: 14))
                }
                .buttonStyle(.plain)
+               .hoverEffect()
                .keyboardShortcut(.cancelAction)
             }
          }
          .padding(.horizontal, 12)
          .padding(.vertical, 6)
          .frame(width: LaunchPadConstants.searchBarWidth, height: LaunchPadConstants.searchBarHeight)
-         .background(
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-               .fill(Color(NSColor.windowBackgroundColor).opacity(0.4 * transparency))
-         )
+         .glassEffect()
          .shadow(color: Color.black.opacity(0.2 * transparency), radius: 10, x: 0, y: 3)
          
          // Settings button
@@ -112,13 +109,11 @@ struct SearchBarView: View {
                   .font(.system(size: 16, weight: .medium))
                   .foregroundColor(.white)
                   .frame(width: 36, height: 36)
-                  .background(
-                     Circle()
-                        .fill(Color(NSColor.windowBackgroundColor).opacity(0.4 * transparency))
-                  )
-                  .shadow(color: Color.black.opacity(0.2 * transparency), radius: 10, x: 0, y: 3)
             }
             .buttonStyle(.plain)
+            .glassEffect()
+            .hoverEffect()
+            .shadow(color: Color.black.opacity(0.2 * transparency), radius: 10, x: 0, y: 3)
          }
          Spacer()
       }

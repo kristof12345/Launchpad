@@ -20,16 +20,11 @@ struct SidebarTabButton: View {
          .padding(.vertical, 8)
          .frame(maxWidth: .infinity, alignment: .leading)
          .contentShape(Rectangle())
-         .background(
-            RoundedRectangle(cornerRadius: 6)
-               .fill(isSelected ? Color.accentColor.opacity(0.15) : Color.clear)
-         )
-         .overlay(
-            RoundedRectangle(cornerRadius: 6)
-               .stroke(isSelected ? Color.accentColor.opacity(0.3) : Color.clear, lineWidth: 1)
-         )
+         .glassEffect(isSelected ? .selected : .normal)
       }
       .buttonStyle(.plain)
       .foregroundColor(isSelected ? .primary : .secondary)
+      .hoverEffect()
+      .animation(.smooth(duration: 0.3), value: isSelected)
    }
 }

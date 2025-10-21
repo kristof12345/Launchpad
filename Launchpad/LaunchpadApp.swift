@@ -25,7 +25,7 @@ struct LaunchpadApp: App {
                SettingsView(onDismiss: { showSettings = false }, initialTab: settingsManager.settings.isActivated ? 0 : 6)
             }
          }
-         .background(VisualEffectView(material: .fullScreenUI, blendingMode: .behindWindow))
+         .glassEffect()
          .onAppear(perform: initialize)
       }
    }
