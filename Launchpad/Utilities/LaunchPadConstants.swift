@@ -1,9 +1,12 @@
 import SwiftUI
 
 /// Constants used throughout the LaunchPad application
+/// Updated for macOS 26 with smooth animations and liquid glass effects
 class LaunchPadConstants {
 
    // MARK: - Animation Constants
+   // Modern smooth animations replace traditional interpolating springs
+   // These provide more natural, fluid motion consistent with macOS 26
    static let springAnimation = Animation.smooth(duration: 0.4, extraBounce: 0.1)
    static let fadeAnimation = Animation.smooth(duration: 0.3)
    static let quickFadeAnimation = Animation.smooth(duration: 0.2)

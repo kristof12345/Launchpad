@@ -33,7 +33,7 @@ struct CategoryNameView: View {
                      DispatchQueue.main.async { nameFieldFocused = true }
                   }
                   .onSubmit {
-                     withAnimation(.easeOut(duration: 0.2)) { editingName = false }
+                     withAnimation(.smooth(duration: 0.2)) { editingName = false }
                      nameFieldFocused = false
                      CategoryManager.shared.renameCategory(category: category, newName: category.name)
                   }
@@ -44,7 +44,7 @@ struct CategoryNameView: View {
                   .padding(.horizontal, 16)
                   .padding(.vertical, 8)
                   .onTapGesture {
-                     withAnimation(.easeOut(duration: 0.2)) { editingName = true}
+                     withAnimation(.smooth(duration: 0.2)) { editingName = true}
                   }
             }
             Spacer()

@@ -1,5 +1,7 @@
 import SwiftUI
 
+/// Main application entry point for Launchpad
+/// Uses liquid glass effects (macOS 26+) for modern, translucent UI
 @main
 struct LaunchpadApp: App {
    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -25,6 +27,8 @@ struct LaunchpadApp: App {
                SettingsView(onDismiss: { showSettings = false }, initialTab: settingsManager.settings.isActivated ? 0 : 6)
             }
          }
+         // Apply liquid glass effect for translucent, blurred background
+         // Replaces NSVisualEffectView for better SwiftUI integration
          .glassEffect()
          .onAppear(perform: initialize)
       }

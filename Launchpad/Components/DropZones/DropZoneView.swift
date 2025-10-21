@@ -47,7 +47,7 @@ struct DropZoneView: View {
       Rectangle()
          .fill(shouldShowChevron ? Color.accentColor.opacity(0.2 * transparency) : Color.clear)
          .frame(width: LaunchPadConstants.dropZoneWidth)
-         .glassEffect(shouldShowChevron ? .selected : .normal)
+         .glassEffect()
          .overlay(alignment: alignment) {
             if shouldShowChevron {
                VStack {

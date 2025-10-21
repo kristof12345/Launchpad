@@ -19,6 +19,8 @@ struct SettingsView: View {
             .ignoresSafeArea()
             .onTapGesture(perform: onDismiss)
          
+         // GlassEffectContainer groups related glass effects for optimal performance
+         // This is part of macOS 26's Liquid Glass API
          GlassEffectContainer {
             VStack(spacing: 0) {
                HStack {
@@ -127,6 +129,8 @@ struct SettingsView: View {
             .padding(24)
             .frame(width: 720, height: 460)
          }
+         // Apply liquid glass effect to the entire settings container
+         // This provides a modern, translucent appearance
          .glassEffect()
          .shadow(color: .black.opacity(0.3), radius: 20, x: 0, y: 10)
       }
