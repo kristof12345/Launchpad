@@ -33,6 +33,12 @@ struct SinglePageView: View {
                         }) {
                            Label(L10n.hideApp, systemImage: "eye.slash")
                         }
+                     } else if case .widget(let widget) = item {
+                        Button(role: .destructive, action: {
+                           AppManager.shared.removeWidget(id: widget.id, appsPerPage: settings.appsPerPage)
+                        }) {
+                           Label(L10n.removeWidget, systemImage: "trash")
+                        }
                      }
                   }
                   .onDrag {

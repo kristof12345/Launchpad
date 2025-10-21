@@ -139,4 +139,20 @@ struct L10n {
    static let noHiddenApps = "no_hidden_apps".localized
    static let hiddenAppsDescription = "hidden_apps_description".localized
    static let unhideAllApps = "unhide_all_apps".localized
+   
+   // MARK: - Widgets
+   static let widgets = "widgets".localized
+   static let addWidget = "add_widget".localized
+   static let removeWidget = "remove_widget".localized
+   static let widgetClock = "widget_clock".localized
+   static let widgetCalendar = "widget_calendar".localized
+   static let widgetWeather = "widget_weather".localized
+   static let widgetNotes = "widget_notes".localized
+   static let widgetSizeSmall = "widget_size_small".localized
+   static let widgetSizeMedium = "widget_size_medium".localized
+   static let widgetSizeLarge = "widget_size_large".localized
+   static let widgetsDescription = "widgets_description".localized
+   static let createWidget = "create_widget".localized
+   static let widgetType = "widget_type".localized
+   static let widgetSize = "widget_size".localized
 }

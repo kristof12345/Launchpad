@@ -128,3 +128,19 @@
 "location_not_directory" = "The specified path is not a directory.";
 "location_already_added" = "This location has already been added.";
 "select_folder_message" = "Select a folder to search for applications";
+
+// MARK: - Widgets
+"widgets" = "Widgets";
+"add_widget" = "Add Widget";
+"remove_widget" = "Remove Widget";
+"widget_clock" = "Clock";
+"widget_calendar" = "Calendar";
+"widget_weather" = "Weather";
+"widget_notes" = "Notes";
+"widget_size_small" = "Small";
+"widget_size_medium" = "Medium";
+"widget_size_large" = "Large";
+"widgets_description" = "Add customizable widgets to your launcher pages";
+"create_widget" = "Create Widget";
+"widget_type" = "Widget Type";
+"widget_size" = "Widget Size";

@@ -128,3 +128,19 @@
 "location_not_directory" = "A megadott útvonal nem mappa.";
 "location_already_added" = "Ez a hely már hozzá lett adva.";
 "select_folder_message" = "Válassz egy mappát az alkalmazások kereséséhez";
+
+// MARK: - Widgets
+"widgets" = "Widgetek";
+"add_widget" = "Widget Hozzáadása";
+"remove_widget" = "Widget Eltávolítása";
+"widget_clock" = "Óra";
+"widget_calendar" = "Naptár";
+"widget_weather" = "Időjárás";
+"widget_notes" = "Jegyzetek";
+"widget_size_small" = "Kicsi";
+"widget_size_medium" = "Közepes";
+"widget_size_large" = "Nagy";
+"widgets_description" = "Testreszabható widgeteket adhatsz a launchpad oldalaidhoz";
+"create_widget" = "Widget Létrehozása";
+"widget_type" = "Widget Típus";
+"widget_size" = "Widget Méret";

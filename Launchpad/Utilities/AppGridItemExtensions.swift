@@ -6,6 +6,7 @@ extension AppGridItem {
       case .app(let app): return app.path
       case .folder: return ""
       case .category: return ""
+      case .widget: return ""
       }
    }
    
@@ -14,6 +15,7 @@ extension AppGridItem {
       case .app(let app): return app.lastOpenedDate
       case .folder(let folder): return folder.apps.compactMap(\.lastOpenedDate).max()
       case .category: return nil
+      case .widget: return nil
       }
    }
    
@@ -22,6 +24,7 @@ extension AppGridItem {
       case .app(let app): return app.installDate
       case .folder(let folder): return folder.apps.compactMap(\.installDate).max()
       case .category: return nil
+      case .widget: return nil
       }
    }
    
@@ -30,6 +33,7 @@ extension AppGridItem {
       case .app(let app): return [app.path]
       case .folder(let folder): return Set(folder.apps.map(\.path))
       case .category: return []
+      case .widget: return []
       }
    }
    
@@ -38,6 +42,7 @@ extension AppGridItem {
       case .app(let app): return serialize(app)
       case .folder(let folder): return serialize(folder)
       case .category: return [:]
+      case .widget(let widget): return serialize(widget)
       }
    }
    
@@ -61,6 +66,18 @@ extension AppGridItem {
       ]
    }
    
+   func serialize(_ widget: Widget) -> [String: Any] {
+      [
+         "type": "widget",
+         "id": widget.id.uuidString,
+         "name": widget.name,
+         "widgetType": widget.type.rawValue,
+         "size": widget.size.rawValue,
+         "page": widget.page,
+         "configuration": widget.configuration
+      ]
+   }
+   
    func withUpdatedPage(_ newPage: Int) -> AppGridItem {
       switch self {
       case .app(let app):
@@ -69,6 +86,8 @@ extension AppGridItem {
          return .folder(Folder(name: folder.name, page: newPage, apps: folder.apps))
       case .category(let category):
          return .category(category)
+      case .widget(let widget):
+         return .widget(Widget(id: widget.id, name: widget.name, type: widget.type, size: widget.size, page: newPage, configuration: widget.configuration))
       }
    }
 }

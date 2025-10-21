@@ -204,6 +204,10 @@ final class AppManager: ObservableObject {
             if let gridItem = loadFolderItem(from: itemData, appsByPath: appsByPath) {
                gridItems.append(gridItem)
             }
+         case "widget":
+            if let gridItem = loadWidgetItem(from: itemData) {
+               gridItems.append(gridItem)
+            }
          default:
             break
          }
@@ -235,6 +239,20 @@ final class AppManager: ObservableObject {
       let savedPage = itemData["page"] as? Int ?? 0
       let folder = Folder(name: folderName, page: savedPage, apps: folderApps)
       return .folder(folder)
+   }
+   
+   private func loadWidgetItem(from itemData: [String: Any]) -> AppGridItem? {
+      guard let name = itemData["name"] as? String,
+            let widgetTypeString = itemData["widgetType"] as? String,
+            let widgetType = WidgetType(rawValue: widgetTypeString),
+            let sizeString = itemData["size"] as? String,
+            let size = WidgetSize(rawValue: sizeString) else { return nil }
+      
+      let page = itemData["page"] as? Int ?? 0
+      let configuration = itemData["configuration"] as? [String: String] ?? [:]
+      
+      let widget = Widget(name: name, type: widgetType, size: size, page: page, configuration: configuration)
+      return .widget(widget)
    }
 
    private func getLocalizedAppName(for url: URL, fallbackName: String) -> String {
@@ -307,6 +325,10 @@ final class AppManager: ObservableObject {
                if let gridItem = loadFolderItem(from: itemData, appsByPath: appsByPath) {
                   gridItems.append(gridItem)
                }
+            case "widget":
+               if let gridItem = loadWidgetItem(from: itemData) {
+                  gridItems.append(gridItem)
+               }
             default:
                break
             }
@@ -377,6 +399,42 @@ final class AppManager: ObservableObject {
          return false
       case .category:
          return false
+      case .widget:
+         return false
       }
+   }
+   
+   func addWidget(type: WidgetType, size: WidgetSize, page: Int, appsPerPage: Int) {
+      let widget = Widget(name: type.rawValue.capitalized, type: type, size: size, page: page)
+      let widgetItem = AppGridItem.widget(widget)
+      
+      // Add the widget to the specified page
+      if page < pages.count {
+         pages[page].append(widgetItem)
+      } else {
+         // Create new page if needed
+         while pages.count <= page {
+            pages.append([])
+         }
+         pages[page].append(widgetItem)
+      }
+      
+      // Recalculate pages to ensure proper layout
+      recalculatePages(appsPerPage: appsPerPage)
+      saveGridItems()
+   }
+   
+   func removeWidget(id: UUID, appsPerPage: Int) {
+      for pageIndex in 0..<pages.count {
+         pages[pageIndex].removeAll { item in
+            if case .widget(let widget) = item {
+               return widget.id == id
+            }
+            return false
+         }
+      }
+      
+      recalculatePages(appsPerPage: appsPerPage)
+      saveGridItems()
    }
 }

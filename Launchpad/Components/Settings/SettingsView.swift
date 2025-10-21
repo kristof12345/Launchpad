@@ -72,10 +72,16 @@ struct SettingsView: View {
                      action: { selectedTab = 5 }
                   )
                   SidebarTabButton(
-                     icon: "key.fill",
-                     label: L10n.activation,
+                     icon: "square.grid.2x2",
+                     label: L10n.widgets,
                      isSelected: selectedTab == 6,
                      action: { selectedTab = 6 }
+                  )
+                  SidebarTabButton(
+                     icon: "key.fill",
+                     label: L10n.activation,
+                     isSelected: selectedTab == 7,
+                     action: { selectedTab = 7 }
                   )
                   Spacer()
                }
@@ -100,6 +106,8 @@ struct SettingsView: View {
                         CategorySettings()
                      } else if selectedTab == 5 {
                         LocationsSettings(settings: $settings)
+                     } else if selectedTab == 6 {
+                        WidgetSettings(settingsManager: settingsManager)
                      } else {
                         ActivationSettings(settings: $settings)
                      }
