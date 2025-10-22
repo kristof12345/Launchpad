@@ -32,7 +32,7 @@ struct SettingsView: View {
                      .buttonStyle(.plain)
                      .foregroundColor(.secondary)
                      .font(.title3)
-                     .hoverEffect()
+                     
                }
                .padding(.bottom, 16)
                
@@ -114,14 +114,14 @@ struct SettingsView: View {
                      HStack(spacing: 16) {
                         Button(L10n.resetToDefaults, action: reset)
                            .buttonStyle(.bordered)
-                           .hoverEffect()
+                           
                         Spacer()
                         Button(L10n.cancel, action: onDismiss)
                            .buttonStyle(.bordered)
-                           .hoverEffect()
+                           
                         Button(L10n.apply, action: apply)
                            .buttonStyle(.borderedProminent)
-                           .hoverEffect()
+                           
                      }
                   }
                }

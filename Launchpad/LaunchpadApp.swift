@@ -27,9 +27,6 @@ struct LaunchpadApp: App {
                SettingsView(onDismiss: { showSettings = false }, initialTab: settingsManager.settings.isActivated ? 0 : 6)
             }
          }
-         // Apply liquid glass effect for translucent, blurred background
-         // Replaces NSVisualEffectView for better SwiftUI integration
-         .glassEffect()
          .onAppear(perform: initialize)
       }
    }

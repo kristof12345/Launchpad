@@ -16,8 +16,6 @@ struct CategoryFilterButton: View {
             .foregroundColor(isSelected ? .white : .primary)
       }
       .buttonStyle(.plain)
-      .glassEffect()
-      .hoverEffect()
       .animation(.smooth(duration: 0.3), value: isSelected)
    }
 }

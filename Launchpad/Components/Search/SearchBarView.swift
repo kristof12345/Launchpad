@@ -26,7 +26,7 @@ struct SearchBarView: View {
             }
             .buttonStyle(.plain)
             .glassEffect()
-            .hoverEffect()
+            
             .shadow(color: Color.black.opacity(0.2 * transparency), radius: 10, x: 0, y: 3)
             .popover(isPresented: $showSortMenu, arrowEdge: .bottom) {
                VStack(alignment: .leading, spacing: 0) {
@@ -57,7 +57,7 @@ struct SearchBarView: View {
                         )
                      }
                      .buttonStyle(SortMenuItemButtonStyle())
-                     .hoverEffect()
+                     
                      .onHover { hovering in
                         withAnimation(.smooth(duration: 0.12)) {
                            hoveredItem = hovering ? order : nil
@@ -92,7 +92,7 @@ struct SearchBarView: View {
                      .font(.system(size: 14))
                }
                .buttonStyle(.plain)
-               .hoverEffect()
+               
                .keyboardShortcut(.cancelAction)
             }
          }
@@ -112,7 +112,7 @@ struct SearchBarView: View {
             }
             .buttonStyle(.plain)
             .glassEffect()
-            .hoverEffect()
+            
             .shadow(color: Color.black.opacity(0.2 * transparency), radius: 10, x: 0, y: 3)
          }
          Spacer()

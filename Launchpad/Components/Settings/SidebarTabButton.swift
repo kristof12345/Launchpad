@@ -24,7 +24,7 @@ struct SidebarTabButton: View {
       .buttonStyle(.plain)
       .foregroundColor(isSelected ? .primary : .secondary)
       .glassEffect()
-      .hoverEffect()
+      
       .animation(.smooth(duration: 0.3), value: isSelected)
    }
 }
