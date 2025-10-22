@@ -27,11 +27,13 @@ struct WidgetView: View {
       case .clock:
          ClockWidgetView(widget: widget, layout: layout)
       case .calendar:
-         Text("📅")
-            .font(.system(size: layout.iconSize * 0.6))
+         CalendarWidgetView(widget: widget, layout: layout)
       case .weather:
-         Text("⛅")
-            .font(.system(size: layout.iconSize * 0.6))
+         WeatherWidgetView(widget: widget, layout: layout)
+      case .battery:
+         BatteryWidgetView(widget: widget, layout: layout)
+      case .stocks:
+         StocksWidgetView(widget: widget, layout: layout)
       case .notes:
          Text("📝")
             .font(.system(size: layout.iconSize * 0.6))

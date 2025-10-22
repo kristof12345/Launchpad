@@ -147,6 +147,8 @@ struct L10n {
    static let widgetClock = "widget_clock".localized
    static let widgetCalendar = "widget_calendar".localized
    static let widgetWeather = "widget_weather".localized
+   static let widgetBattery = "widget_battery".localized
+   static let widgetStocks = "widget_stocks".localized
    static let widgetNotes = "widget_notes".localized
    static let widgetSizeSmall = "widget_size_small".localized
    static let widgetSizeMedium = "widget_size_medium".localized

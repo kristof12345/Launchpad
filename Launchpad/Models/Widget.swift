@@ -5,6 +5,8 @@ enum WidgetType: String, Codable {
    case calendar
    case weather
    case notes
+   case battery
+   case stocks
    
    var defaultSize: WidgetSize {
       switch self {
@@ -16,6 +18,10 @@ enum WidgetType: String, Codable {
          return .small
       case .notes:
          return .large
+      case .battery:
+         return .small
+      case .stocks:
+         return .medium
       }
    }
 }

@@ -136,6 +136,8 @@
 "widget_clock" = "Óra";
 "widget_calendar" = "Naptár";
 "widget_weather" = "Időjárás";
+"widget_battery" = "Akkumulátor";
+"widget_stocks" = "Részvények";
 "widget_notes" = "Jegyzetek";
 "widget_size_small" = "Kicsi";
 "widget_size_medium" = "Közepes";
