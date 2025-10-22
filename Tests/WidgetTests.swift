@@ -230,4 +230,85 @@ final class WidgetTests: XCTestCase {
          XCTFail("Expected widget item")
       }
    }
+   
+   // MARK: - New Widget Types Tests
+   
+   func testBatteryWidgetCreation() {
+      let widget = Widget(name: "Battery", type: .battery, size: .small, page: 0)
+      
+      XCTAssertEqual(widget.name, "Battery")
+      XCTAssertEqual(widget.type, .battery)
+      XCTAssertEqual(widget.size, .small)
+      XCTAssertEqual(widget.page, 0)
+   }
+   
+   func testStocksWidgetCreation() {
+      let widget = Widget(name: "Stocks", type: .stocks, size: .medium, page: 0)
+      
+      XCTAssertEqual(widget.name, "Stocks")
+      XCTAssertEqual(widget.type, .stocks)
+      XCTAssertEqual(widget.size, .medium)
+      XCTAssertEqual(widget.page, 0)
+   }
+   
+   func testBatteryWidgetSerialization() {
+      let widget = Widget(name: "Battery", type: .battery, size: .small, page: 0)
+      let gridItem = AppGridItem.widget(widget)
+      
+      let serialized = gridItem.serialize()
+      
+      XCTAssertEqual(serialized["type"] as? String, "widget")
+      XCTAssertEqual(serialized["name"] as? String, "Battery")
+      XCTAssertEqual(serialized["widgetType"] as? String, "battery")
+      XCTAssertEqual(serialized["size"] as? String, "small")
+   }
+   
+   func testStocksWidgetSerialization() {
+      let widget = Widget(name: "Stocks", type: .stocks, size: .medium, page: 1)
+      let gridItem = AppGridItem.widget(widget)
+      
+      let serialized = gridItem.serialize()
+      
+      XCTAssertEqual(serialized["type"] as? String, "widget")
+      XCTAssertEqual(serialized["name"] as? String, "Stocks")
+      XCTAssertEqual(serialized["widgetType"] as? String, "stocks")
+      XCTAssertEqual(serialized["size"] as? String, "medium")
+      XCTAssertEqual(serialized["page"] as? Int, 1)
+   }
+   
+   func testAddBatteryWidget() {
+      appManager.pages = [[]]
+      
+      appManager.addWidget(type: .battery, size: .small, page: 0, appsPerPage: 12)
+      
+      let firstPageItems = appManager.pages[0]
+      let widgetItems = firstPageItems.filter { if case .widget = $0 { return true } else { return false } }
+      
+      XCTAssertEqual(widgetItems.count, 1)
+      
+      if case .widget(let widget) = widgetItems.first {
+         XCTAssertEqual(widget.type, .battery)
+         XCTAssertEqual(widget.size, .small)
+      } else {
+         XCTFail("Expected battery widget")
+      }
+   }
+   
+   func testAddStocksWidget() {
+      appManager.pages = [[]]
+      
+      appManager.addWidget(type: .stocks, size: .medium, page: 0, appsPerPage: 12)
+      
+      let firstPageItems = appManager.pages[0]
+      let widgetItems = firstPageItems.filter { if case .widget = $0 { return true } else { return false } }
+      
+      XCTAssertEqual(widgetItems.count, 1)
+      
+      if case .widget(let widget) = widgetItems.first {
+         XCTAssertEqual(widget.type, .stocks)
+         XCTAssertEqual(widget.size, .medium)
+      } else {
+         XCTFail("Expected stocks widget")
+      }
+   }
 }
