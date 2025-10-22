@@ -136,6 +136,8 @@
 "widget_clock" = "Clock";
 "widget_calendar" = "Calendar";
 "widget_weather" = "Weather";
+"widget_battery" = "Battery";
+"widget_stocks" = "Stocks";
 "widget_notes" = "Notes";
 "widget_size_small" = "Small";
 "widget_size_medium" = "Medium";

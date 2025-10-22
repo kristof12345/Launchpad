@@ -47,6 +47,8 @@ final class WidgetTests: XCTestCase {
       XCTAssertEqual(WidgetType.clock.defaultSize, .medium)
       XCTAssertEqual(WidgetType.calendar.defaultSize, .medium)
       XCTAssertEqual(WidgetType.weather.defaultSize, .small)
+      XCTAssertEqual(WidgetType.battery.defaultSize, .small)
+      XCTAssertEqual(WidgetType.stocks.defaultSize, .medium)
       XCTAssertEqual(WidgetType.notes.defaultSize, .large)
    }
    

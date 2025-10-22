@@ -25,6 +25,8 @@ struct WidgetSettings: View {
                Text(L10n.widgetClock).tag(WidgetType.clock)
                Text(L10n.widgetCalendar).tag(WidgetType.calendar)
                Text(L10n.widgetWeather).tag(WidgetType.weather)
+               Text(L10n.widgetBattery).tag(WidgetType.battery)
+               Text(L10n.widgetStocks).tag(WidgetType.stocks)
                Text(L10n.widgetNotes).tag(WidgetType.notes)
             }
             .pickerStyle(.segmented)
