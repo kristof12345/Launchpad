@@ -126,6 +126,17 @@ https://apps.apple.com/hu/app/hot-corners/id1672176975?l=hu&mt=12
 Create a keyboard shortcut using BetterTouchTool or similar:
 <img width="1512" height="456" alt="Képernyőfotó 2025-10-19 - 15 29 50" src="https://github.com/user-attachments/assets/79a83933-c7e9-4d05-a731-51477d6ea51b" />
 
+## 🚀 Future Development
+Want to see what's coming next? Check out our comprehensive [**Enhancements & Future Features**](ENHANCEMENTS.md) document, which details 55+ potential features across:
+- User Interface Enhancements
+- Advanced Organization Features
+- Search and Discovery Improvements
+- Performance Optimizations
+- Integration Features
+- And much more!
+
+We welcome community feedback and contributions for any of these features.
+
 ## 🙏 Credits
 - Inspired by macOS Launchpad
 - Built with SwiftUI and modern macOS APIs
