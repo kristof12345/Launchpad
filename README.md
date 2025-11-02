@@ -12,6 +12,8 @@ If you like this project and want to support further development:
 
 **[📥 Download Launchpad v2.7](https://github.com/kristof12345/Launchpad/releases/download/v2.7/Launchpad.app.zip)**
 
+> ⚠️ **macOS Security Warning?** If macOS blocks the app, see our **[Quick Fix Guide](QUICKFIX.md)** (takes 1 minute) or the full [Troubleshooting Guide](TROUBLESHOOTING.md#-macos-security--gatekeeper-issues).
+
 ## ✨ Features
 
 ### 🎨 **Modern Design**
@@ -90,6 +92,19 @@ If you like this project and want to support further development:
 
 ## 🚀 Quick Start
 
+### 📥 **Installation**
+
+1. **Download** the latest release from [GitHub Releases](https://github.com/kristof12345/Launchpad/releases)
+2. **Unzip** the downloaded file
+3. **Move** LaunchpadPlus.app to your Applications folder
+4. **Remove quarantine** (required for unsigned apps):
+   ```bash
+   xattr -cr /Applications/LaunchpadPlus.app
+   ```
+5. **Launch** LaunchpadPlus from Applications
+
+> **Having trouble?** Check the [🛠️ Troubleshooting Guide](TROUBLESHOOTING.md#-macos-security--gatekeeper-issues) for detailed instructions.
+
 ### 📥 **First Launch**
 1. App scans `/Applications` and `/System/Applications`
 2. Apps sorted alphabetically by default
@@ -136,6 +151,13 @@ xcodebuild test -scheme LaunchpadPlus -destination 'platform=macOS' -parallel-te
 ```
 
 **Note**: Parallel testing must be disabled due to shared singleton state in tests. The tests use `AppManager.shared` which creates race conditions when tests run concurrently. Future improvements could implement dependency injection to allow parallel test execution.
+
+## 📚 Documentation
+
+- **[⚡ Quick Fix](QUICKFIX.md)** - Fast solution for macOS security warnings (1 minute)
+- **[🛠️ Troubleshooting Guide](TROUBLESHOOTING.md)** - Solutions for common issues and detailed explanations
+- **[🔒 Security Policy](SECURITY.md)** - Code signing information and security best practices
+- **[🤝 Contributing Guide](CONTRIBUTING.md)** - How to build, develop, and contribute to the project
 
 ## 🙏 Credits
 - Inspired by macOS Launchpad
