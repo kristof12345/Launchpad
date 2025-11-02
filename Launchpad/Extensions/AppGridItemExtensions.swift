@@ -43,21 +43,21 @@ extension AppGridItem {
 
    func serialize(_ folder: Folder) -> [String : Any] {
       return [
-         "type": "folder",
-         "id": folder.id.uuidString,
-         "name": folder.name,
-         "page": folder.page,
-         "apps": folder.apps.map(serialize)
+         SerializationKeys.type: SerializationTypes.folder,
+         SerializationKeys.id: folder.id.uuidString,
+         SerializationKeys.name: folder.name,
+         SerializationKeys.page: folder.page,
+         SerializationKeys.apps: folder.apps.map(serialize)
       ]
    }
 
    func serialize(_ app: AppInfo) -> [String: Any] {
       [
-         "type": "app",
-         "id": app.id.uuidString,
-         "name": app.name,
-         "page": app.page,
-         "path": app.path
+         SerializationKeys.type: SerializationTypes.app,
+         SerializationKeys.id: app.id.uuidString,
+         SerializationKeys.name: app.name,
+         SerializationKeys.page: app.page,
+         SerializationKeys.path: app.path
       ]
    }
 

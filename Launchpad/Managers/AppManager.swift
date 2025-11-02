@@ -190,13 +190,13 @@ final class AppManager: ObservableObject {
       var gridItems: [AppGridItem] = []
 
       for itemData in itemsArray {
-         guard let type = itemData["type"] as? String else { continue }
+         guard let type = itemData[SerializationKeys.type] as? String else { continue }
          switch type {
-         case "app":
+         case SerializationTypes.app:
             if let gridItem = loadApp(from: itemData, appsByPath: appsByPath) {
                gridItems.append(.app(gridItem))
             }
-         case "folder":
+         case SerializationTypes.folder:
             if let gridItem = loadFolder(from: itemData, appsByPath: appsByPath) {
                gridItems.append(.folder(gridItem))
             }
@@ -209,17 +209,17 @@ final class AppManager: ObservableObject {
    }
 
    private func loadApp(from itemData: [String: Any], appsByPath: [String: AppInfo]) -> AppInfo? {
-      let path = itemData["path"] as! String
-      let page = itemData["page"] as! Int
+      let path = itemData[SerializationKeys.path] as! String
+      let page = itemData[SerializationKeys.page] as! Int
       guard let baseApp = appsByPath[path] else { return nil }
       return AppInfo(name: baseApp.name, icon: baseApp.icon, path: baseApp.path, bundleId: baseApp.bundleId,lastOpenedDate: baseApp.lastOpenedDate, installDate: baseApp.installDate, page: page)
 
    }
 
    private func loadFolder(from itemData: [String: Any], appsByPath: [String: AppInfo]) -> Folder? {
-      let folderName = itemData["name"] as! String
-      let savedPage = itemData["page"] as? Int ?? 0
-      let appsData = itemData["apps"] as! [[String: Any]]
+      let folderName = itemData[SerializationKeys.name] as! String
+      let savedPage = itemData[SerializationKeys.page] as? Int ?? 0
+      let appsData = itemData[SerializationKeys.apps] as! [[String: Any]]
 
       let folderApps = appsData.compactMap { loadApp(from: $0, appsByPath: appsByPath)}
 
