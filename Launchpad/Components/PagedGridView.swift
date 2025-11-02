@@ -351,52 +351,29 @@ struct PagedGridView: View {
    private func navigateSearchLeft() {
       let apps = filteredApps()
       guard !apps.isEmpty else { return }
-
-      if selectedSearchIndex > 0 {
-         selectedSearchIndex -= 1
-      } else {
-         selectedSearchIndex = apps.count - 1
-      }
+      
+      selectedSearchIndex = SearchNavigationHelper.navigateLeft(currentIndex: selectedSearchIndex, itemCount: apps.count)
    }
 
    private func navigateSearchRight() {
       let apps = filteredApps()
       guard !apps.isEmpty else { return }
-
-      if selectedSearchIndex < apps.count - 1 {
-         selectedSearchIndex += 1
-      } else {
-         selectedSearchIndex = 0
-      }
+      
+      selectedSearchIndex = SearchNavigationHelper.navigateRight(currentIndex: selectedSearchIndex, itemCount: apps.count)
    }
 
    private func navigateSearchUp() {
       let apps = filteredApps()
       guard !apps.isEmpty else { return }
-
-      let newIndex = selectedSearchIndex - settings.columns
-      if newIndex >= 0 {
-         selectedSearchIndex = newIndex
-      } else {
-         // Wrap to bottom row
-         let lastRowStartIndex = (apps.count - 1) / settings.columns * settings.columns
-         let columnOffset = selectedSearchIndex % settings.columns
-         selectedSearchIndex = min(lastRowStartIndex + columnOffset, apps.count - 1)
-      }
+      
+      selectedSearchIndex = SearchNavigationHelper.navigateUp(currentIndex: selectedSearchIndex, itemCount: apps.count, columns: settings.columns)
    }
 
    private func navigateSearchDown() {
       let apps = filteredApps()
       guard !apps.isEmpty else { return }
-
-      let newIndex = selectedSearchIndex + settings.columns
-      if newIndex < apps.count {
-         selectedSearchIndex = newIndex
-      } else {
-         // Wrap to top row
-         let columnOffset = selectedSearchIndex % settings.columns
-         selectedSearchIndex = min(columnOffset, apps.count - 1)
-      }
+      
+      selectedSearchIndex = SearchNavigationHelper.navigateDown(currentIndex: selectedSearchIndex, itemCount: apps.count, columns: settings.columns)
    }
 
    private func handleAppActivation() {
