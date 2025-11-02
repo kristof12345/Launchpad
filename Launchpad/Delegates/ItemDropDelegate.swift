@@ -78,20 +78,7 @@ struct ItemDropDelegate: DropDelegate {
    }
    
    private func handlePageOverflow(targetPageIndex: Int) {
-      while pages[targetPageIndex].count > appsPerPage {
-         let overflowItem = pages[targetPageIndex].removeLast()
-         
-         let nextPageNumber = targetPageIndex + 1
-         
-         let updatedOverflowItem = overflowItem.withUpdatedPage(nextPageNumber)
-         
-         if nextPageNumber >= pages.count {
-            pages.append([updatedOverflowItem])
-         } else {
-            pages[nextPageNumber].insert(updatedOverflowItem, at: 0)
-            handlePageOverflow(targetPageIndex: nextPageNumber)
-         }
-      }
+      PageOverflowHelper.handleOverflow(pages: &pages, pageIndex: targetPageIndex, appsPerPage: appsPerPage)
    }
    
    private func createFolder(with app1: AppInfo, and app2: AppInfo) {

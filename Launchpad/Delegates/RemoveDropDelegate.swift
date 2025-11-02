@@ -29,17 +29,7 @@ struct RemoveDropDelegate: DropDelegate {
     }
     
     private func handlePageOverflow(pageIndex: Int) {
-        while pages[pageIndex].count > appsPerPage {
-            let overflowItem = pages[pageIndex].removeLast()
-            let nextPage = pageIndex + 1
-            let updatedOverflowItem = overflowItem.withUpdatedPage(nextPage)
-            if nextPage >= pages.count {
-                pages.append([updatedOverflowItem])
-            } else {
-                pages[nextPage].insert(updatedOverflowItem, at: 0)
-                handlePageOverflow(pageIndex: nextPage)
-            }
-        }
+        PageOverflowHelper.handleOverflow(pages: &pages, pageIndex: pageIndex, appsPerPage: appsPerPage)
     }
     
     func dropUpdated(info: DropInfo) -> DropProposal? {
