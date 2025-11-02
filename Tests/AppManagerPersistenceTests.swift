@@ -68,7 +68,7 @@ final class AppManagerPersistenceTests: BaseTestCase {
       try? await Task.sleep(nanoseconds: 100_000_000)
 
       // Verify data was saved
-      let savedData = UserDefaults.standard.array(forKey: "LaunchpadAppGridItems") as? [[String: Any]]
+      let savedData = UserDefaults.standard.array(forKey: UserDefaultsKeys.gridItems) as? [[String: Any]]
       XCTAssertNotNil(savedData, "Should save data to UserDefaults")
       XCTAssertEqual(savedData?.count, 4, "Should save 4 items (3 apps + 1 folder)")
 
@@ -86,7 +86,7 @@ final class AppManagerPersistenceTests: BaseTestCase {
          [:] // Empty object
       ]
 
-      UserDefaults.standard.set(corruptedData, forKey: "LaunchpadAppGridItems")
+      UserDefaults.standard.set(corruptedData, forKey: UserDefaultsKeys.gridItems)
 
       // Should not crash when loading
       XCTAssertNoThrow {
@@ -109,7 +109,7 @@ final class AppManagerPersistenceTests: BaseTestCase {
          ]
       ]
 
-      UserDefaults.standard.set(missingAppData, forKey: "LaunchpadAppGridItems")
+      UserDefaults.standard.set(missingAppData, forKey: UserDefaultsKeys.gridItems)
 
       // Should handle missing apps gracefully
       XCTAssertNoThrow {
@@ -179,7 +179,7 @@ final class AppManagerPersistenceTests: BaseTestCase {
       try? await Task.sleep(nanoseconds: 200_000_000)
 
       // Verify that some data was saved (exact data depends on timing)
-      let savedData = UserDefaults.standard.array(forKey: "LaunchpadAppGridItems")
+      let savedData = UserDefaults.standard.array(forKey: UserDefaultsKeys.gridItems)
       XCTAssertNotNil(savedData, "Should have saved some data")
    }
 
@@ -192,7 +192,7 @@ final class AppManagerPersistenceTests: BaseTestCase {
       // Wait for save
       try? await Task.sleep(nanoseconds: 100_000_000)
 
-      let savedData = UserDefaults.standard.array(forKey: "LaunchpadAppGridItems") as? [[String: Any]]
+      let savedData = UserDefaults.standard.array(forKey: UserDefaultsKeys.gridItems) as? [[String: Any]]
       XCTAssertNotNil(savedData, "Should save even empty data")
       XCTAssertEqual(savedData?.count, 0, "Empty pages should result in empty array")
    }

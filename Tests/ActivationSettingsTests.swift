@@ -11,12 +11,12 @@ final class ActivationSettingsTests: XCTestCase {
       settingsManager = SettingsManager.shared
 
       // Clear test data
-      UserDefaults.standard.removeObject(forKey: "LaunchpadSettings")
+      UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.settings)
       UserDefaults.standard.synchronize()
    }
 
    override func tearDown() {
-      UserDefaults.standard.removeObject(forKey: "LaunchpadSettings")
+      UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.settings)
       UserDefaults.standard.synchronize()
       super.tearDown()
    }

@@ -125,7 +125,7 @@ final class AppManagerTests: BaseTestCase {
       try? await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
 
       // Then: Data should be saved to UserDefaults
-      let savedData = UserDefaults.standard.array(forKey: "LaunchpadAppGridItems") as? [[String: Any]]
+      let savedData = UserDefaults.standard.array(forKey: UserDefaultsKeys.gridItems) as? [[String: Any]]
       XCTAssertNotNil(savedData, "Data should be saved to UserDefaults")
       XCTAssertEqual(savedData?.count, 5, "Should save 5 items")
 
@@ -165,7 +165,7 @@ final class AppManagerTests: BaseTestCase {
          ]
       ]
 
-      UserDefaults.standard.set(savedData, forKey: "LaunchpadAppGridItems")
+      UserDefaults.standard.set(savedData, forKey: UserDefaultsKeys.gridItems)
 
       // When: Loading grid items (this would normally discover real apps)
       // Note: This test will fail for apps that don't exist on the system
@@ -184,14 +184,14 @@ final class AppManagerTests: BaseTestCase {
       appManager.saveAppGridItems()
 
       // Ensure data is saved
-      let initialData = UserDefaults.standard.array(forKey: "LaunchpadAppGridItems")
+      let initialData = UserDefaults.standard.array(forKey: UserDefaultsKeys.gridItems)
       XCTAssertNotNil(initialData, "Should have initial data")
 
       // When: Clearing grid items
       appManager.clearAppGridItems(appsPerPage: 20)
 
       // Then: UserDefaults should be cleared and new apps discovered
-      _ = UserDefaults.standard.array(forKey: "LaunchpadAppGridItems")
+      _ = UserDefaults.standard.array(forKey: UserDefaultsKeys.gridItems)
       // Note: clearAppGridItems calls loadAppGridItems, which may save new data
       // So we mainly check that the method runs without crashing
       XCTAssertNoThrow({
@@ -301,7 +301,7 @@ final class AppManagerIntegrationTests: BaseTestCase {
       try? await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
 
       // 3. Verify data was saved
-      let savedData = UserDefaults.standard.array(forKey: "LaunchpadAppGridItems")
+      let savedData = UserDefaults.standard.array(forKey: UserDefaultsKeys.gridItems)
       XCTAssertNotNil(savedData, "Data should be saved")
 
       // 4. Clear and reload

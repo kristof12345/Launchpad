@@ -9,14 +9,12 @@ final class AppManager: ObservableObject {
    private let fileManager = FileManager.default
 
    private let userDefaults = UserDefaults.standard
-   private let gridItemsKey = "LaunchpadAppGridItems"
-   private let hiddenAppsKey = "LaunchpadHiddenApps"
 
    static let shared = AppManager()
 
    private init() {
       self.pages = [[]]
-      self.hiddenAppPaths = Set(userDefaults.stringArray(forKey: hiddenAppsKey) ?? [])
+      self.hiddenAppPaths = Set(userDefaults.stringArray(forKey: UserDefaultsKeys.hiddenApps) ?? [])
    }
 
    @Published var pages: [[AppGridItem]]
@@ -38,7 +36,7 @@ final class AppManager: ObservableObject {
    func saveAppGridItems() {
       print("Save grid items.")
       let itemsData = pages.flatMap { $0 }.map { $0.serialize() }
-      userDefaults.set(itemsData, forKey: gridItemsKey)
+      userDefaults.set(itemsData, forKey: UserDefaultsKeys.gridItems)
    }
 
    func importLayout(appsPerPage: Int) -> (success: Bool, message: String) {
@@ -55,7 +53,7 @@ final class AppManager: ObservableObject {
 
    func clearAppGridItems(appsPerPage: Int) {
       print("Clear grid items.")
-      userDefaults.removeObject(forKey: gridItemsKey)
+      userDefaults.removeObject(forKey: UserDefaultsKeys.gridItems)
       loadAppGridItems(appsPerPage: appsPerPage)
    }
 
@@ -178,7 +176,7 @@ final class AppManager: ObservableObject {
 
    private func loadLayoutFromUserDefaults(for apps: [AppInfo]) -> [AppGridItem] {
       print("Load layout.")
-      guard let savedData = userDefaults.array(forKey: gridItemsKey) as? [[String: Any]] else {
+      guard let savedData = userDefaults.array(forKey: UserDefaultsKeys.gridItems) as? [[String: Any]] else {
          return apps.map { .app($0) }
       }
 
@@ -324,7 +322,7 @@ final class AppManager: ObservableObject {
 
    private func saveHiddenApps() {
       print("Save hidden apps.")
-      userDefaults.set(Array(hiddenAppPaths), forKey: hiddenAppsKey)
+      userDefaults.set(Array(hiddenAppPaths), forKey: UserDefaultsKeys.hiddenApps)
    }
 
    func hideApp(path: String) {

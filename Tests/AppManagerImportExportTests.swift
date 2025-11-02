@@ -20,14 +20,14 @@ final class AppManagerImportExportTests: XCTestCase {
         try? FileManager.default.createDirectory(at: testDirectory, withIntermediateDirectories: true)
         
         // Clear UserDefaults
-        UserDefaults.standard.removeObject(forKey: "LaunchpadAppGridItems")
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.gridItems)
     }
     
     override func tearDown() {
         // Clean up test files
         try? FileManager.default.removeItem(at: testDirectory)
         
-        UserDefaults.standard.removeObject(forKey: "LaunchpadAppGridItems")
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.gridItems)
         super.tearDown()
     }
     

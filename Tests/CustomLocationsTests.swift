@@ -26,15 +26,15 @@ final class CustomLocationsTests: XCTestCase {
       settingsManager.resetToDefaults()
       
       // Clear test data
-      UserDefaults.standard.removeObject(forKey: "LaunchpadAppGridItems")
-      UserDefaults.standard.removeObject(forKey: "LaunchpadSettings")
+      UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.gridItems)
+      UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.settings)
    }
    
    override func tearDown() {
       // Clean up test files and data
       try? FileManager.default.removeItem(at: testDirectory)
-      UserDefaults.standard.removeObject(forKey: "LaunchpadAppGridItems")
-      UserDefaults.standard.removeObject(forKey: "LaunchpadSettings")
+      UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.gridItems)
+      UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.settings)
       settingsManager.resetToDefaults()
       super.tearDown()
    }

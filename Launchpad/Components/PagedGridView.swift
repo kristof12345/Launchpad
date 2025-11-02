@@ -253,7 +253,7 @@ struct PagedGridView: View {
       print(event.keyCode)
       // Handle special keys
       switch event.keyCode {
-      case 53:  // ESC
+      case KeyCodeConstants.escape:  // ESC
          if !searchText.isEmpty {
             searchText = ""
             selectedSearchIndex = 0
@@ -264,33 +264,33 @@ struct PagedGridView: View {
             selectedFolder = nil
             selectedCategory = nil
          }
-      case 123:  // Left arrow
+      case KeyCodeConstants.leftArrow:  // Left arrow
          if !searchText.isEmpty {
             navigateSearchLeft()
             return nil
          } else if selectedFolder == nil && selectedCategory == nil {
             navigateToPreviousPage()
          }
-      case 124:  // Right arrow
+      case KeyCodeConstants.rightArrow:  // Right arrow
          if !searchText.isEmpty {
             navigateSearchRight()
             return nil
          } else if selectedFolder == nil && selectedCategory == nil {
             navigateToNextPage()
          }
-      case 125:  // Down arrow
+      case KeyCodeConstants.downArrow:  // Down arrow
          if !searchText.isEmpty {
             navigateSearchDown()
             return nil
          }
-      case 126:  // Up arrow
+      case KeyCodeConstants.upArrow:  // Up arrow
          if !searchText.isEmpty {
             navigateSearchUp()
             return nil
          }
-      case 43:  // CMD + Comma
+      case KeyCodeConstants.comma:  // CMD + Comma
          showSettings = true
-      case 36:  // Enter
+      case KeyCodeConstants.enter:  // Enter
          if selectedCategory != nil {
             launchAllAppsInCategory()
          } else {

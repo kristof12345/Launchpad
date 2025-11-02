@@ -9,11 +9,6 @@ class BaseTestCase: XCTestCase {
    
    var appManager: AppManager!
    
-   /// Keys used for UserDefaults storage
-   let gridItemsKey = "LaunchpadAppGridItems"
-   let hiddenAppsKey = "LaunchpadHiddenApps"
-   let settingsKey = "LaunchpadSettings"
-   
    override func setUp() {
       super.setUp()
       appManager = AppManager.shared
@@ -27,8 +22,8 @@ class BaseTestCase: XCTestCase {
    
    /// Clears all test-related data from UserDefaults and resets manager state
    func clearAllTestData() {
-      UserDefaults.standard.removeObject(forKey: gridItemsKey)
-      UserDefaults.standard.removeObject(forKey: hiddenAppsKey)
+      UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.gridItems)
+      UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.hiddenApps)
       UserDefaults.standard.synchronize()
       
       // Reset AppManager state
