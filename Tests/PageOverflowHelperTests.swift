@@ -203,4 +203,46 @@ final class PageOverflowHelperTests: XCTestCase {
       XCTAssertEqual(pages[1].count, 3, "Middle page should have max items")
       XCTAssertEqual(pages[2].count, 2, "Last page should have overflow item")
    }
+   
+   func testHandleOverflowWithInvalidPageIndex() {
+      // Given: Pages and an invalid page index
+      var pages: [[AppGridItem]] = [
+         [.app(createMockApp(name: "App1", page: 0))]
+      ]
+      let appsPerPage = 3
+      
+      // When: Handling overflow with invalid index
+      PageOverflowHelper.handleOverflow(pages: &pages, pageIndex: 5, appsPerPage: appsPerPage)
+      
+      // Then: Nothing should crash or change
+      XCTAssertEqual(pages.count, 1, "Should still have 1 page")
+   }
+   
+   func testHandleOverflowWithNegativePageIndex() {
+      // Given: Pages and a negative page index
+      var pages: [[AppGridItem]] = [
+         [.app(createMockApp(name: "App1", page: 0))]
+      ]
+      let appsPerPage = 3
+      
+      // When: Handling overflow with negative index
+      PageOverflowHelper.handleOverflow(pages: &pages, pageIndex: -1, appsPerPage: appsPerPage)
+      
+      // Then: Nothing should crash or change
+      XCTAssertEqual(pages.count, 1, "Should still have 1 page")
+   }
+   
+   func testHandleOverflowWithZeroAppsPerPage() {
+      // Given: Pages with invalid appsPerPage
+      var pages: [[AppGridItem]] = [
+         [.app(createMockApp(name: "App1", page: 0))]
+      ]
+      
+      // When: Handling overflow with zero appsPerPage
+      PageOverflowHelper.handleOverflow(pages: &pages, pageIndex: 0, appsPerPage: 0)
+      
+      // Then: Nothing should crash or change
+      XCTAssertEqual(pages.count, 1, "Should still have 1 page")
+      XCTAssertEqual(pages[0].count, 1, "Page should still have 1 item")
+   }
 }

@@ -37,10 +37,10 @@ struct SearchNavigationHelper {
    /// - Parameters:
    ///   - currentIndex: The current selected index
    ///   - itemCount: Total number of items
-   ///   - columns: Number of columns in the grid
+   ///   - columns: Number of columns in the grid (must be positive)
    /// - Returns: The new index after navigation
    static func navigateUp(currentIndex: Int, itemCount: Int, columns: Int) -> Int {
-      guard itemCount > 0 else { return currentIndex }
+      guard itemCount > 0, columns > 0 else { return currentIndex }
       
       let newIndex = currentIndex - columns
       if newIndex >= 0 {
@@ -57,10 +57,10 @@ struct SearchNavigationHelper {
    /// - Parameters:
    ///   - currentIndex: The current selected index
    ///   - itemCount: Total number of items
-   ///   - columns: Number of columns in the grid
+   ///   - columns: Number of columns in the grid (must be positive)
    /// - Returns: The new index after navigation
    static func navigateDown(currentIndex: Int, itemCount: Int, columns: Int) -> Int {
-      guard itemCount > 0 else { return currentIndex }
+      guard itemCount > 0, columns > 0 else { return currentIndex }
       
       let newIndex = currentIndex + columns
       if newIndex < itemCount {

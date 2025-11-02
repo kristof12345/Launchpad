@@ -6,9 +6,11 @@ struct PageOverflowHelper {
    /// Handles page overflow by moving excess items to the next page
    /// - Parameters:
    ///   - pages: The array of pages to manage
-   ///   - pageIndex: The index of the page that has overflow
-   ///   - appsPerPage: Maximum number of items allowed per page
+   ///   - pageIndex: The index of the page that has overflow (must be valid)
+   ///   - appsPerPage: Maximum number of items allowed per page (must be positive)
    static func handleOverflow(pages: inout [[AppGridItem]], pageIndex: Int, appsPerPage: Int) {
+      guard pageIndex >= 0 && pageIndex < pages.count && appsPerPage > 0 else { return }
+      
       while pages[pageIndex].count > appsPerPage {
          let overflowItem = pages[pageIndex].removeLast()
          let nextPageNumber = pageIndex + 1

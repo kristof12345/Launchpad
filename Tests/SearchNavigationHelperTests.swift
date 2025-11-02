@@ -15,6 +15,8 @@ final class SearchNavigationHelperTests: XCTestCase {
       XCTAssertEqual(newIndex, 9, "Should wrap to the end when at start")
    }
    
+   // MARK: - Edge Case Tests
+   
    func testNavigateLeftWithEmptyList() {
       let newIndex = SearchNavigationHelper.navigateLeft(currentIndex: 0, itemCount: 0)
       XCTAssertEqual(newIndex, 0, "Should stay at same index for empty list")
@@ -135,5 +137,23 @@ final class SearchNavigationHelperTests: XCTestCase {
       
       XCTAssertEqual(upIndex, 2, "Should wrap to same position when row doesn't exist")
       XCTAssertEqual(downIndex, 2, "Should wrap to same position when row doesn't exist")
+   }
+   
+   func testNavigationWithZeroColumns() {
+      // Invalid columns value
+      let upIndex = SearchNavigationHelper.navigateUp(currentIndex: 2, itemCount: 5, columns: 0)
+      let downIndex = SearchNavigationHelper.navigateDown(currentIndex: 2, itemCount: 5, columns: 0)
+      
+      XCTAssertEqual(upIndex, 2, "Should stay at same index with invalid columns")
+      XCTAssertEqual(downIndex, 2, "Should stay at same index with invalid columns")
+   }
+   
+   func testNavigationWithNegativeColumns() {
+      // Invalid columns value
+      let upIndex = SearchNavigationHelper.navigateUp(currentIndex: 2, itemCount: 5, columns: -1)
+      let downIndex = SearchNavigationHelper.navigateDown(currentIndex: 2, itemCount: 5, columns: -1)
+      
+      XCTAssertEqual(upIndex, 2, "Should stay at same index with negative columns")
+      XCTAssertEqual(downIndex, 2, "Should stay at same index with negative columns")
    }
 }
