@@ -71,7 +71,7 @@ final class DropHelperTests: XCTestCase {
       XCTAssertTrue(actionExecuted, "Action should have been executed")
    }
    
-   func testPerformedDelayedMoveRespectsDeley() async {
+   func testPerformedDelayedMoveRespectsDelay() async {
       // Given: A timestamp to measure delay
       let startTime = Date()
       let expectedDelay: TimeInterval = 0.2
