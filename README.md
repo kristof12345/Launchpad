@@ -1,7 +1,7 @@
 # 🚀 LaunchpadPlus
 
 [![Build](https://github.com/kristof12345/Launchpad/actions/workflows/build.yml/badge.svg)](https://github.com/kristof12345/Launchpad/actions/workflows/build.yml)
-[![macOS](https://img.shields.io/badge/macOS-15.6+-blue.svg)](https://www.apple.com/macos/)
+[![macOS](https://img.shields.io/badge/macOS-26.0+-blue.svg)](https://www.apple.com/macos/)
 [![Swift](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
 
 A beautiful, modern macOS application launcher with glass morphism design, inspired by macOS Launchpad but with enhanced functionality and customization. As you might know, Apple removed Launchpad in macOS 26. This app offers a complete replacement with more features and a fully customizable, persistent grid.
@@ -128,7 +128,7 @@ If you like this project and want to support further development:
 - Centralized string management
 
 ### 📦 **Requirements**
-- macOS 15.6 or later
+- macOS 26.0 or later
 - Swift 6.0
 - Universal binary (Apple Silicon + Intel)
 
