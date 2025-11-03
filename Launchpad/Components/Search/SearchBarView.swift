@@ -25,7 +25,7 @@ struct SearchBarView: View {
                   .frame(width: 36, height: 36)
                   .background(
                      Circle()
-                        .fill(Color(NSColor.windowBackgroundColor).opacity(0.4 * transparency))
+                        .fill(Color(.windowBackground).opacity(0.4 * transparency))
                   )
                   .shadow(color: Color.black.opacity(0.2 * transparency), radius: 10, x: 0, y: 3)
             }
@@ -101,7 +101,7 @@ struct SearchBarView: View {
          .frame(width: LaunchpadConstants.searchBarWidth, height: LaunchpadConstants.searchBarHeight)
          .background(
             RoundedRectangle(cornerRadius: 24, style: .continuous)
-               .fill(Color(NSColor.windowBackgroundColor).opacity(0.4 * transparency))
+               .fill(Color(.windowBackground).opacity(0.4 * transparency))
          )
          .shadow(color: Color.black.opacity(0.2 * transparency), radius: 10, x: 0, y: 3)
          
@@ -114,7 +114,7 @@ struct SearchBarView: View {
                   .frame(width: 36, height: 36)
                   .background(
                      Circle()
-                        .fill(Color(NSColor.windowBackgroundColor).opacity(0.4 * transparency))
+                        .fill(Color(.windowBackground).opacity(0.4 * transparency))
                   )
                   .shadow(color: Color.black.opacity(0.2 * transparency), radius: 10, x: 0, y: 3)
             }
