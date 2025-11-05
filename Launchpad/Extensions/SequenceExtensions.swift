@@ -20,7 +20,6 @@ extension Sequence {
       result.reserveCapacity(underestimatedCount)
       for element in self {
          let key = element[keyPath: keyPath]
-         print(key)
          if key == "" || seen.insert(key).inserted {
             result.append(element)
          }

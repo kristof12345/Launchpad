@@ -2,10 +2,20 @@ import SwiftUI
 
 struct GridLayoutUtility {
    static func createGridColumns(count: Int, cellWidth: CGFloat, spacing: CGFloat) -> [GridItem] {
-      Array(repeating: GridItem(.fixed(cellWidth), spacing: spacing), count: count)
+      var columns = [GridItem]()
+      columns.reserveCapacity(count)
+      for _ in 0..<count {
+         columns.append(GridItem(.fixed(cellWidth), spacing: spacing))
+      }
+      return columns
    }
    
    static func createFlexibleGridColumns(count: Int, spacing: CGFloat = 0) -> [GridItem] {
-      Array(repeating: GridItem(.flexible(), spacing: spacing, alignment: .top), count: count)
+      var columns = [GridItem]()
+      columns.reserveCapacity(count)
+      for _ in 0..<count {
+         columns.append(GridItem(.flexible(), spacing: spacing, alignment: .top))
+      }
+      return columns
    }
 }

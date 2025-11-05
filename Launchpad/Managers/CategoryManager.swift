@@ -54,7 +54,11 @@ final class CategoryManager: ObservableObject {
    }
 
    func getAppsForCategory(category: Category, from allApps: [AppInfo]) -> [AppInfo] {
-      let appsByPath = Dictionary(uniqueKeysWithValues: allApps.unique(by: \.path).map { ($0.path, $0) })
+      let uniqueApps = allApps.unique(by: \.path)
+      var appsByPath = Dictionary<String, AppInfo>(minimumCapacity: uniqueApps.count)
+      for app in uniqueApps {
+         appsByPath[app.path] = app
+      }
       return category.appPaths.compactMap { appsByPath[$0] }
    }
 
@@ -118,6 +122,7 @@ final class CategoryManager: ObservableObject {
    
    private func parseCategoriesFromData(_ data: [[String: Any]]) -> [Category] {
       var result: [Category] = []
+      result.reserveCapacity(data.count) // Optimize array allocation
       for itemsData in data {
          guard let idString = itemsData["id"] as? String,
                let id = UUID(uuidString: idString),
@@ -133,11 +138,16 @@ final class CategoryManager: ObservableObject {
 
    private func exportCategoriesToJSON(filePath: URL) -> (success: Bool, message: String) {
       do {
-         let exportData = categories.map { category in [
-            "id": category.id.uuidString,
-            "name": category.name,
-            "appPaths": Array(category.appPaths)
-         ]}
+         var exportData = [[String: Any]]()
+         exportData.reserveCapacity(categories.count) // Optimize array allocation
+         
+         for category in categories {
+            exportData.append([
+               "id": category.id.uuidString,
+               "name": category.name,
+               "appPaths": Array(category.appPaths)
+            ])
+         }
 
          let jsonData = try JSONSerialization.data(withJSONObject: exportData, options: .prettyPrinted)
          try jsonData.write(to: filePath)

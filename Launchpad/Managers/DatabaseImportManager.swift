@@ -20,7 +20,11 @@ final class DatabaseImportManager {
          return []
       }
       
-      let appsById = Dictionary(uniqueKeysWithValues: currentApps.unique(by: \.bundleId).map { ($0.bundleId, $0) })
+      let uniqueApps = currentApps.unique(by: \.bundleId)
+      var appsById = Dictionary<String, AppInfo>(minimumCapacity: uniqueApps.count)
+      for app in uniqueApps {
+         appsById[app.bundleId] = app
+      }
       
       var db: OpaquePointer?
       var results: [AppGridItem] = []
@@ -200,6 +204,7 @@ final class DatabaseImportManager {
    
    private func parseItems(from db: OpaquePointer?) throws -> [LaunchpadDBItem] {
       var items: [LaunchpadDBItem] = []
+      items.reserveCapacity(100) // Optimize initial allocation
       let query = "SELECT rowid, uuid, flags, type, parent_id, ordering FROM items ORDER BY parent_id, ordering"
       var stmt: OpaquePointer?
       

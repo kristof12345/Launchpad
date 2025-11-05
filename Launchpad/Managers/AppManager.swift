@@ -12,6 +12,11 @@ final class AppManager: ObservableObject {
    private let gridItemsKey = "LaunchpadAppGridItems"
    private let hiddenAppsKey = "LaunchpadHiddenApps"
    
+   // Cache for discovered apps to avoid repeated file system scans
+   private var cachedApps: [AppInfo]?
+   private var cacheTimestamp: Date?
+   private let cacheValidityDuration: TimeInterval = 60 // 60 seconds
+   
    static let shared = AppManager()
    
    private init() {
@@ -142,17 +147,31 @@ final class AppManager: ObservableObject {
    }
    
    private func discoverApps() -> [AppInfo] {
+      // Check if cache is still valid
+      if let cached = cachedApps,
+         let timestamp = cacheTimestamp,
+         Date().timeIntervalSince(timestamp) < cacheValidityDuration {
+         return cached
+      }
+      
       print("Discover apps.")
       let defaultPaths = ["/Applications", "/System/Applications"]
       let customPaths = settingsManager.settings.customAppLocations
       let allPaths = defaultPaths + customPaths
-      return allPaths.flatMap { discoverAppsRecursively(directory: $0) }.sorted { $0.name.lowercased() < $1.name.lowercased() }
+      let apps = allPaths.flatMap { discoverAppsRecursively(directory: $0) }.sorted { $0.name.lowercased() < $1.name.lowercased() }
+      
+      // Update cache
+      cachedApps = apps
+      cacheTimestamp = Date()
+      
+      return apps
    }
    
    private func discoverAppsRecursively(directory: String, maxDepth: Int = 3, currentDepth: Int = 0) -> [AppInfo] {
       guard currentDepth < maxDepth, let contents = try? fileManager.contentsOfDirectory(atPath: directory)
       else { return [] }
       var foundApps: [AppInfo] = []
+      foundApps.reserveCapacity(contents.count) // Optimize array allocation
       for item in contents {
          let path = "\(directory)/\(item)"
          if item.hasSuffix(".app") {
@@ -167,6 +186,12 @@ final class AppManager: ObservableObject {
          }
       }
       return foundApps
+   }
+   
+   /// Invalidates the app cache, forcing a fresh discovery on next access
+   func invalidateCache() {
+      cachedApps = nil
+      cacheTimestamp = nil
    }
    
    private func shouldSearchDirectory(item: String, at path: String) -> Bool {
@@ -190,7 +215,12 @@ final class AppManager: ObservableObject {
          return apps.map { .app($0) }
       }
       
-      let appsByPath = Dictionary(uniqueKeysWithValues: apps.unique(by: \.path).map { ($0.path, $0) })
+      let uniqueApps = apps.unique(by: \.path)
+      var appsByPath = Dictionary<String, AppInfo>(minimumCapacity: uniqueApps.count)
+      for app in uniqueApps {
+         appsByPath[app.path] = app
+      }
+      
       var gridItems = parseAppGridItems(from: savedData, appsByPath: appsByPath)
       addRemainingApps(items: &gridItems, apps: apps)
       return gridItems
@@ -198,6 +228,7 @@ final class AppManager: ObservableObject {
    
    private func parseAppGridItems(from itemsArray: [[String: Any]], appsByPath: [String: AppInfo]) -> [AppGridItem] {
       var gridItems: [AppGridItem] = []
+      gridItems.reserveCapacity(itemsArray.count) // Optimize array allocation
 
       for itemData in itemsArray {
          guard let type = itemData["type"] as? String else { continue }
@@ -248,20 +279,25 @@ final class AppManager: ObservableObject {
    }
    
    private func groupItemsByPage(items: [AppGridItem], appsPerPage: Int) -> [[AppGridItem]] {
-      let groupedByPage = Dictionary(grouping: items.uniqueOrDefault(by: \.path)) { $0.page }
+      let uniqueItems = items.uniqueOrDefault(by: \.path)
+      let groupedByPage = Dictionary(grouping: uniqueItems) { $0.page }
       let pageCount = max(groupedByPage.keys.max() ?? 1, 1)
       var pages: [[AppGridItem]] = []
+      pages.reserveCapacity(pageCount + 1) // Optimize array allocation
       var currentPage = 0
       
       for pageNum in currentPage...pageCount {
          currentPage = pageNum
          var currentPageItems: [AppGridItem] = []
          let pageItems = groupedByPage[pageNum] ?? []
+         currentPageItems.reserveCapacity(min(pageItems.count, appsPerPage)) // Optimize array allocation
+         
          for item in pageItems {
             if currentPageItems.count >= appsPerPage {
                pages.append(currentPageItems)
                currentPage += 1
                currentPageItems = []
+               currentPageItems.reserveCapacity(appsPerPage)
             }
             
             let updatedItem = currentPage > item.page ? item.withUpdatedPage(currentPage) : item
@@ -288,7 +324,12 @@ final class AppManager: ObservableObject {
          }
          
          let allApps = discoverApps()
-         let appsByPath = Dictionary(uniqueKeysWithValues: allApps.unique(by: \.path).map { ($0.path, $0) })
+         let uniqueApps = allApps.unique(by: \.path)
+         var appsByPath = Dictionary<String, AppInfo>(minimumCapacity: uniqueApps.count)
+         for app in uniqueApps {
+            appsByPath[app.path] = app
+         }
+         
          let gridItems = parseAppGridItems(from: itemsArray, appsByPath: appsByPath)
          pages = groupItemsByPage(items: gridItems, appsPerPage: appsPerPage)
          
