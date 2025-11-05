@@ -7,7 +7,7 @@ final class IconCacheManager {
    
    private var cache: [String: NSImage] = [:]
    private let maxCacheSize = 5000 // Maximum number of cached icons
-   private var cacheOrder: Set<String> = [] // Track cached keys for O(1) operations
+   private var cacheOrder = Set<String>() // Track cached keys for O(1) operations
    private var insertionOrder: [String] = [] // FIFO queue for cache eviction
    
    func icon(forPath path: String) -> NSImage {
@@ -28,13 +28,13 @@ final class IconCacheManager {
          insertionOrder.removeFirst()
       }
       
-      // Only add if not already present
+      // Only add to insertion order if not already present
       if cacheOrder.insert(path).inserted {
-         cache[path] = icon
          insertionOrder.append(path)
-      } else {
-         cache[path] = icon
       }
+      
+      // Always update the cached icon
+      cache[path] = icon
    }
    
    func clearCache() {
