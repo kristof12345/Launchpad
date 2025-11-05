@@ -296,8 +296,8 @@ final class AppManager: ObservableObject {
             if currentPageItems.count >= appsPerPage {
                pages.append(currentPageItems)
                currentPage += 1
-               currentPageItems = []
-               currentPageItems.reserveCapacity(appsPerPage)
+               currentPageItems = [AppGridItem]()
+               currentPageItems.reserveCapacity(appsPerPage) // Reserve for new page
             }
             
             let updatedItem = currentPage > item.page ? item.withUpdatedPage(currentPage) : item

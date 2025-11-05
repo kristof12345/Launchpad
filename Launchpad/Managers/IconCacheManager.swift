@@ -28,13 +28,13 @@ final class IconCacheManager {
          insertionOrder.removeFirst()
       }
       
-      // Only add to insertion order if not already present
+      // Update cache with new/updated icon
+      cache[path] = icon
+      
+      // Track in order only if new entry (simple FIFO, not LRU)
       if cacheOrder.insert(path).inserted {
          insertionOrder.append(path)
       }
-      
-      // Always update the cached icon
-      cache[path] = icon
    }
    
    func clearCache() {
