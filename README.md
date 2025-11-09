@@ -1,29 +1,18 @@
-# 🚀 LaunchpadPlus (AI-Enhanced Fork)
+# 🚀 LaunchpadPlus
 
+[![Build](https://github.com/kristof12345/Launchpad/actions/workflows/build.yml/badge.svg)](https://github.com/kristof12345/Launchpad/actions/workflows/build.yml)
 [![macOS](https://img.shields.io/badge/macOS-15.6+-blue.svg)](https://www.apple.com/macos/)
 [![Swift](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
-[![AI Powered](https://img.shields.io/badge/AI-Powered-purple.svg)](PROMPTS.md)
 
-> **This is a fork of [kristof12345/Launchpad](https://github.com/kristof12345/Launchpad)** with AI-assisted improvements focused on user experience and animation smoothness.
+A beautiful, modern macOS application launcher with glass morphism design, inspired by macOS Launchpad but with enhanced functionality and customization. As you might know, Apple removed Launchpad in macOS 26. This app offers a complete replacement with more features and a fully customizable, persistent grid.
 
-A beautiful, modern macOS application launcher with glass morphism design, inspired by macOS Launchpad but with enhanced functionality and customization. This fork removes activation prompts and improves page transition animations to match Apple's native Launchpad experience.
+If you like this project and want to support further development:
 
-## 🤖 AI-Enhanced Features
+<a href="https://www.buymeacoffee.com/Waikiki.com" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-This fork has been improved using AI-assisted development to address key user experience issues:
+**[📥 Download Launchpad v3.1](https://github.com/kristof12345/Launchpad/releases/download/v3.1/LaunchpadPlus.app.zip)**
 
-- ✅ **No Activation Prompts** - All premium features unlocked by default
-- ✅ **Smoother Animations** - Optimized spring animations for fluid page transitions
-- ✅ **Better Swipe Handling** - Fixed multiple page skipping on hard swipes
-
-### 📚 Documentation
-
-This project includes comprehensive AI development documentation:
-
-- **[CHANGES.md](CHANGES.md)** - Detailed technical documentation of all improvements, root cause analysis, and solutions
-- **[PROMPTS.md](PROMPTS.md)** - Optimized AI prompts used to solve each issue, reusable for similar problems
-
-These documents demonstrate how AI can be effectively used to diagnose, debug, and fix complex software issues.
+**macOS Security Warning?** If macOS blocks the app, see our **[Quick Fix Guide](QUICKFIX.md)**.
 
 ## ✨ Features
 
@@ -165,6 +154,5 @@ xcodebuild test -scheme LaunchpadPlus -destination 'platform=macOS' -parallel-te
 
 ## 📚 Documentation
 
-### Original Documentation
 - **[⚡ Quick Fix](QUICKFIX.md)** - Fast solution for macOS security warnings (1 minute)
 - **[🛠️ Troubleshooting Guide](TROUBLESHOOTING.md)** - Solutions for common issues and detailed explanations
