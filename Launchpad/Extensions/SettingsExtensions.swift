@@ -6,14 +6,14 @@ extension LaunchpadSettings {
    }
 
    var isActivated: Bool {
-      return LaunchpadKeys.isActivated(key: productKey)
+      return true
    }
 
    var isPro: Bool {
-      return LaunchpadKeys.isPro(key: productKey)
+      return true
    }
 
    var isPremium: Bool {
-      return LaunchpadKeys.isPremium(key: productKey)
+      return true
    }
 }

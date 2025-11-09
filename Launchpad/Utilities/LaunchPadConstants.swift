@@ -3,7 +3,7 @@ import SwiftUI
 class LaunchpadConstants {
 
    // MARK: - Animation Constants
-   static let springAnimation = Animation.interpolatingSpring(stiffness: 300, damping: 100)
+   static let springAnimation = Animation.interpolatingSpring(stiffness: 400, damping: 35)
    static let fadeAnimation = Animation.easeInOut(duration: 0.3)
    static let easeInOutAnimation = Animation.easeInOut(duration: 0.2)
    static let easeInAnimation = Animation.easeIn(duration: 0.2)

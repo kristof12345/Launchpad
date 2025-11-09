@@ -11,6 +11,7 @@ struct PagedGridView: View {
    @State private var lastScrollTime = Date.distantPast
    @State private var accumulatedScrollX: CGFloat = 0
    @State private var accumulatedScrollY: CGFloat = 0
+   @State private var hasChangedPageInCurrentGesture = false
    @State private var eventMonitor: Any?
    @State private var searchText = ""
    @State private var selectedSearchIndex = 0
@@ -196,37 +197,58 @@ struct PagedGridView: View {
       guard (absX > 0 || absY > 0) else { return event }
 
       let now = Date()
-      guard now.timeIntervalSince(lastScrollTime) >= settingsManager.settings.scrollDebounceInterval else { return event }
-
+      let timeSinceLastScroll = now.timeIntervalSince(lastScrollTime)
+      
+      // Detect new gesture: reset accumulation if enough time passed, but keep the page change flag longer
+      if timeSinceLastScroll > 0.3 {
+         accumulatedScrollX = 0
+         accumulatedScrollY = 0
+      }
+      
+      // Only reset the page change flag after a longer pause (gesture truly ended)
+      if event.phase == .began || event.phase == .ended || event.phase == .cancelled || timeSinceLastScroll > 0.8 {
+         hasChangedPageInCurrentGesture = false
+      }
+      
+      // If we already changed page in this gesture, ignore further scrolling
+      guard !hasChangedPageInCurrentGesture else { return event }
+      
+      // Update last scroll time
+      lastScrollTime = now
+      
       // Determine which direction has more movement and accumulate accordingly
       if absX >= absY {
          // Horizontal scroll (trackpad swipe)
-         accumulatedScrollY = 0  // Reset vertical accumulation when scrolling horizontally
+         accumulatedScrollY = 0
          accumulatedScrollX += event.scrollingDeltaX
 
          if accumulatedScrollX <= -settingsManager.settings.scrollActivationThreshold {
             currentPage = min(currentPage + 1, totalPages - 1)
-            resetScrollState(at: now)
+            hasChangedPageInCurrentGesture = true
+            accumulatedScrollX = 0
             return nil
          } else if accumulatedScrollX >= settingsManager.settings.scrollActivationThreshold {
             currentPage = max(currentPage - 1, 0)
-            resetScrollState(at: now)
+            hasChangedPageInCurrentGesture = true
+            accumulatedScrollX = 0
             return nil
          }
       } else {
          // Vertical scroll (mouse wheel) - disabled on category page
          guard currentPage != 0 else { return event }
 
-         accumulatedScrollX = 0  // Reset horizontal accumulation when scrolling vertically
+         accumulatedScrollX = 0
          accumulatedScrollY += event.scrollingDeltaY
 
          if accumulatedScrollY <= -settingsManager.settings.scrollActivationThreshold {
             currentPage = min(currentPage + 1, totalPages - 1)
-            resetScrollState(at: now)
+            hasChangedPageInCurrentGesture = true
+            accumulatedScrollY = 0
             return nil
          } else if accumulatedScrollY >= settingsManager.settings.scrollActivationThreshold {
             currentPage = max(currentPage - 1, 0)
-            resetScrollState(at: now)
+            hasChangedPageInCurrentGesture = true
+            accumulatedScrollY = 0
             return nil
          }
       }
@@ -234,11 +256,7 @@ struct PagedGridView: View {
       return event
    }
 
-   private func resetScrollState(at time: Date) {
-      lastScrollTime = time
-      accumulatedScrollX = 0
-      accumulatedScrollY = 0
-   }
+
 
    private func handleFlagsChanged(event: NSEvent) -> NSEvent? {
       // Check if Alt/Option key is pressed
@@ -390,10 +408,6 @@ struct PagedGridView: View {
          selectedFolder = nil
          selectedCategory = nil
          searchText = ""
-      }
-
-      if !SettingsManager.shared.settings.isActivated {
-         showSettings = true
       }
    }
 }

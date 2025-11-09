@@ -1,18 +1,29 @@
-# 🚀 LaunchpadPlus
+# 🚀 LaunchpadPlus (AI-Enhanced Fork)
 
-[![Build](https://github.com/kristof12345/Launchpad/actions/workflows/build.yml/badge.svg)](https://github.com/kristof12345/Launchpad/actions/workflows/build.yml)
 [![macOS](https://img.shields.io/badge/macOS-15.6+-blue.svg)](https://www.apple.com/macos/)
 [![Swift](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
+[![AI Powered](https://img.shields.io/badge/AI-Powered-purple.svg)](PROMPTS.md)
 
-A beautiful, modern macOS application launcher with glass morphism design, inspired by macOS Launchpad but with enhanced functionality and customization. As you might know, Apple removed Launchpad in macOS 26. This app offers a complete replacement with more features and a fully customizable, persistent grid.
+> **This is a fork of [kristof12345/Launchpad](https://github.com/kristof12345/Launchpad)** with AI-assisted improvements focused on user experience and animation smoothness.
 
-If you like this project and want to support further development:
+A beautiful, modern macOS application launcher with glass morphism design, inspired by macOS Launchpad but with enhanced functionality and customization. This fork removes activation prompts and improves page transition animations to match Apple's native Launchpad experience.
 
-<a href="https://www.buymeacoffee.com/Waikiki.com" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+## 🤖 AI-Enhanced Features
 
-**[📥 Download Launchpad v3.1](https://github.com/kristof12345/Launchpad/releases/download/v3.1/LaunchpadPlus.app.zip)**
+This fork has been improved using AI-assisted development to address key user experience issues:
 
-**macOS Security Warning?** If macOS blocks the app, see our **[Quick Fix Guide](QUICKFIX.md)**.
+- ✅ **No Activation Prompts** - All premium features unlocked by default
+- ✅ **Smoother Animations** - Optimized spring animations for fluid page transitions
+- ✅ **Better Swipe Handling** - Fixed multiple page skipping on hard swipes
+
+### 📚 Documentation
+
+This project includes comprehensive AI development documentation:
+
+- **[CHANGES.md](CHANGES.md)** - Detailed technical documentation of all improvements, root cause analysis, and solutions
+- **[PROMPTS.md](PROMPTS.md)** - Optimized AI prompts used to solve each issue, reusable for similar problems
+
+These documents demonstrate how AI can be effectively used to diagnose, debug, and fix complex software issues.
 
 ## ✨ Features
 
@@ -154,10 +165,38 @@ xcodebuild test -scheme LaunchpadPlus -destination 'platform=macOS' -parallel-te
 
 ## 📚 Documentation
 
+### Original Documentation
 - **[⚡ Quick Fix](QUICKFIX.md)** - Fast solution for macOS security warnings (1 minute)
 - **[🛠️ Troubleshooting Guide](TROUBLESHOOTING.md)** - Solutions for common issues and detailed explanations
 
+### AI Development Documentation
+- **[📝 CHANGES.md](CHANGES.md)** - Complete technical breakdown of improvements:
+  - Issue descriptions and root cause analysis
+  - Detailed solution explanations
+  - Files modified and testing recommendations
+  - Configuration best practices
+  
+- **[🤖 PROMPTS.md](PROMPTS.md)** - AI prompt engineering guide:
+  - Optimized prompts for each issue type
+  - Key search terms and solution patterns
+  - Debugging strategies and best practices
+  - Reusable templates for similar problems
+
+## 🔧 Building from Source
+
+1. Clone this repository
+2. Open `Launchpad.xcodeproj` in Xcode
+3. Build and run (CMD + R) or archive for distribution
+4. See [CHANGES.md](CHANGES.md) for configuration recommendations
+
 ## 🙏 Credits
+
+- **Original Project:** [kristof12345/Launchpad](https://github.com/kristof12345/Launchpad)
+- **AI Enhancements:** Powered by Kiro AI Assistant
 - Inspired by macOS Launchpad
 - Built with SwiftUI and modern macOS APIs
 - Based on LaunchBack project
+
+## 📄 License
+
+This fork maintains the same license as the original project. Please refer to the [original repository](https://github.com/kristof12345/Launchpad) for license details.

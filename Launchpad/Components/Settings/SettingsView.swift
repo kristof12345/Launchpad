@@ -81,12 +81,6 @@ struct SettingsView: View {
                      action: { selectedTab = 6 },
                      isDisabled: !settings.isPro
                   )
-                  SidebarTabButton(
-                     icon: "key.fill",
-                     label: L10n.activation,
-                     isSelected: selectedTab == 7,
-                     action: { selectedTab = 7 }
-                  )
                   Spacer()
                }
                .frame(width: 200)
@@ -112,8 +106,6 @@ struct SettingsView: View {
                         CategorySettings()
                      } else if selectedTab == 6 {
                         LocationsSettings(settings: $settings)
-                     } else {
-                        ActivationSettings(settings: $settings)
                      }
                   }
 
