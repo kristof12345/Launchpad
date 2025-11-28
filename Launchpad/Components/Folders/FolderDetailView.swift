@@ -66,6 +66,13 @@ struct FolderDetailView: View {
                }
                .opacity(opacity)
             }
+            .onDrop(
+               of: [.text],
+               delegate: FolderBackgroundDropDelegate(
+                  folder: Binding(get: { folder! }, set: { folder = $0 }),
+                  draggedApp: $draggedApp
+               )
+            )
             .frame(width: LaunchpadConstants.folderWidth, height: LaunchpadConstants.folderHeight)
             .background(FolderBackground(transparency: settings.transparency))
             .shadow(color: .black.opacity(0.15 * settings.transparency), radius: 40, x: 0, y: 20)

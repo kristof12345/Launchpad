@@ -10,7 +10,7 @@ If you like this project and want to support further development:
 
 <a href="https://www.buymeacoffee.com/Waikiki.com" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-**[📥 Download Launchpad v3.1](https://github.com/kristof12345/Launchpad/releases/download/v3.1/LaunchpadPlus.app.zip)**
+**[📥 Download Launchpad v3.2](https://github.com/kristof12345/Launchpad/releases/download/v3.2/LaunchpadPlus.app.zip)**
 
 **macOS Security Warning?** If macOS blocks the app, see our **[Quick Fix Guide](QUICKFIX.md)**.
 
