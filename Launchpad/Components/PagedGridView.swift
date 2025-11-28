@@ -87,12 +87,7 @@ struct PagedGridView: View {
       }
       .onAppear {
          setupEventMonitoring()
-         // Trigger float-in animation on initial appear
-         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            withAnimation(LaunchpadConstants.floatInAnimation) {
-               isAppearing = true
-            }
-         }
+         triggerFloatInAnimation()
       }
       .onDisappear(perform: cleanupEventMonitoring)
       .onChange(of: searchText) {
@@ -422,10 +417,15 @@ struct PagedGridView: View {
          showSettings = true
       }
       
-      // Trigger float-in animation
+      triggerFloatInAnimation()
+   }
+   
+   private func triggerFloatInAnimation() {
       isAppearing = false
-      withAnimation(LaunchpadConstants.floatInAnimation) {
-         isAppearing = true
+      DispatchQueue.main.asyncAfter(deadline: .now() + LaunchpadConstants.floatInInitialDelay) {
+         withAnimation(LaunchpadConstants.floatInAnimation) {
+            isAppearing = true
+         }
       }
    }
 }

@@ -13,6 +13,13 @@ struct SinglePageView: View {
     
     @State private var hoveredItem: AppGridItem?
     
+    private func itemOpacity() -> Double {
+        if isFolderOpen {
+            return LaunchpadConstants.dimmedOpacity
+        }
+        return isAppearing ? 1 : 0
+    }
+    
     var body: some View {
         GeometryReader { geo in
             let layout = LayoutMetrics(size: geo.size, columns: settings.columns, rows: settings.rows, iconSize: settings.iconSize, margin: settings.margin)
@@ -34,7 +41,7 @@ struct SinglePageView: View {
                             isEditMode: isEditMode,
                             settings: settings
                         )
-                        .opacity(isFolderOpen ? LaunchpadConstants.dimmedOpacity : (isAppearing ? 1 : 0))
+                        .opacity(itemOpacity())
                         .scaleEffect(isAppearing ? 1 : LaunchpadConstants.floatInInitialScale)
                         .offset(y: isAppearing ? 0 : LaunchpadConstants.floatInInitialOffset)
                         .animation(LaunchpadConstants.floatInAnimation.delay(staggerDelay), value: isAppearing)

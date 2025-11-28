@@ -16,6 +16,7 @@ class LaunchpadConstants {
    static let floatInInitialScale: CGFloat = 0.5
    static let floatInInitialOffset: CGFloat = 40
    static let floatInStaggerDelay: Double = 0.02
+   static let floatInInitialDelay: Double = 0.1
 
    // MARK: - Layout Constants
    static let folderPreviewCount = 9 // Apps shown in folder preview (3x3 grid)
