@@ -20,6 +20,7 @@ struct PagedGridView: View {
    @State private var sortOrder: SortOrder = SortOrder.defaultLayout
    @State private var selectedCategory: Category?
    @State private var isEditMode = false
+   @State private var isAppearing = false
 
    private var totalPages: Int {
       return pages.count + 1  // +1 for category page
@@ -57,6 +58,7 @@ struct PagedGridView: View {
                         pageIndex: pageIndex,
                         settings: settingsManager.settings,
                         isFolderOpen: selectedFolder != nil,
+                        isAppearing: isAppearing,
                         onItemTap: handleTap
                      )
                      .frame(width: geo.size.width, height: geo.size.height)
@@ -83,7 +85,15 @@ struct PagedGridView: View {
             settings: settingsManager.settings
          )
       }
-      .onAppear(perform: setupEventMonitoring)
+      .onAppear {
+         setupEventMonitoring()
+         // Trigger float-in animation on initial appear
+         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            withAnimation(LaunchpadConstants.floatInAnimation) {
+               isAppearing = true
+            }
+         }
+      }
       .onDisappear(perform: cleanupEventMonitoring)
       .onChange(of: searchText) {
          selectedSearchIndex = 0
@@ -410,6 +420,12 @@ struct PagedGridView: View {
 
       if !SettingsManager.shared.settings.isActivated {
          showSettings = true
+      }
+      
+      // Trigger float-in animation
+      isAppearing = false
+      withAnimation(LaunchpadConstants.floatInAnimation) {
+         isAppearing = true
       }
    }
 }

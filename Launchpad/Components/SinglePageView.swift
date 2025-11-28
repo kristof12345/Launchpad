@@ -8,6 +8,7 @@ struct SinglePageView: View {
     let pageIndex: Int
     let settings: LaunchpadSettings
     let isFolderOpen: Bool
+    let isAppearing: Bool
     let onItemTap: (AppGridItem) -> Void
     
     @State private var hoveredItem: AppGridItem?
@@ -21,7 +22,9 @@ struct SinglePageView: View {
                     columns: GridLayoutUtility.createGridColumns(count: settings.columns, cellWidth: layout.cellWidth, spacing: layout.hSpacing),
                     spacing: layout.hSpacing
                 ) {
-                    ForEach(pages[pageIndex]) { item in
+                    ForEach(Array(pages[pageIndex].enumerated()), id: \.element.id) { index, item in
+                        let staggerDelay = Double(index) * LaunchpadConstants.floatInStaggerDelay
+                        
                         AppGridItemView(
                             item: item, 
                             layout: layout,
@@ -31,7 +34,10 @@ struct SinglePageView: View {
                             isEditMode: isEditMode,
                             settings: settings
                         )
-                        .opacity(isFolderOpen ? LaunchpadConstants.dimmedOpacity : 1)
+                        .opacity(isFolderOpen ? LaunchpadConstants.dimmedOpacity : (isAppearing ? 1 : 0))
+                        .scaleEffect(isAppearing ? 1 : LaunchpadConstants.floatInInitialScale)
+                        .offset(y: isAppearing ? 0 : LaunchpadConstants.floatInInitialOffset)
+                        .animation(LaunchpadConstants.floatInAnimation.delay(staggerDelay), value: isAppearing)
                         .onHover { isHovering in
                             hoveredItem = isHovering ? item : nil
                         }
