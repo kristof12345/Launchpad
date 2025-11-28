@@ -13,6 +13,8 @@ struct SinglePageView: View {
     
     @State private var hoveredItem: AppGridItem?
     
+    /// Returns the opacity for grid items based on folder state and appear animation.
+    /// Items start invisible (opacity 0) before the float-in animation begins.
     private func itemOpacity() -> Double {
         if isFolderOpen {
             return LaunchpadConstants.dimmedOpacity

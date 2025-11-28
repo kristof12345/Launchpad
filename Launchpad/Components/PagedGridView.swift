@@ -420,6 +420,8 @@ struct PagedGridView: View {
       triggerFloatInAnimation()
    }
    
+   /// Triggers the float-in animation for grid icons.
+   /// Icons instantly reset to their initial hidden state, then animate into view.
    private func triggerFloatInAnimation() {
       withAnimation(.linear(duration: 0)) {
          isAppearing = false
