@@ -421,7 +421,9 @@ struct PagedGridView: View {
    }
    
    private func triggerFloatInAnimation() {
-      isAppearing = false
+      withAnimation(.linear(duration: 0)) {
+         isAppearing = false
+      }
       DispatchQueue.main.asyncAfter(deadline: .now() + LaunchpadConstants.floatInInitialDelay) {
          withAnimation(LaunchpadConstants.floatInAnimation) {
             isAppearing = true
