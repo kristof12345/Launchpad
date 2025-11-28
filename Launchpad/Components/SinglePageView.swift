@@ -8,9 +8,19 @@ struct SinglePageView: View {
     let pageIndex: Int
     let settings: LaunchpadSettings
     let isFolderOpen: Bool
+    let isAppearing: Bool
     let onItemTap: (AppGridItem) -> Void
     
     @State private var hoveredItem: AppGridItem?
+    
+    /// Returns the opacity for grid items based on folder state and appear animation.
+    /// Items start invisible (opacity 0) before the float-in animation begins.
+    private func itemOpacity() -> Double {
+        if isFolderOpen {
+            return LaunchpadConstants.dimmedOpacity
+        }
+        return isAppearing ? 1 : 0
+    }
     
     var body: some View {
         GeometryReader { geo in
@@ -21,7 +31,9 @@ struct SinglePageView: View {
                     columns: GridLayoutUtility.createGridColumns(count: settings.columns, cellWidth: layout.cellWidth, spacing: layout.hSpacing),
                     spacing: layout.hSpacing
                 ) {
-                    ForEach(pages[pageIndex]) { item in
+                    ForEach(Array(pages[pageIndex].enumerated()), id: \.element.id) { index, item in
+                        let staggerDelay = Double(index) * LaunchpadConstants.floatInStaggerDelay
+                        
                         AppGridItemView(
                             item: item, 
                             layout: layout,
@@ -31,7 +43,10 @@ struct SinglePageView: View {
                             isEditMode: isEditMode,
                             settings: settings
                         )
-                        .opacity(isFolderOpen ? LaunchpadConstants.dimmedOpacity : 1)
+                        .opacity(itemOpacity())
+                        .scaleEffect(isAppearing ? 1 : LaunchpadConstants.floatInInitialScale)
+                        .offset(y: isAppearing ? 0 : LaunchpadConstants.floatInInitialOffset)
+                        .animation(LaunchpadConstants.floatInAnimation.delay(staggerDelay), value: isAppearing)
                         .onHover { isHovering in
                             hoveredItem = isHovering ? item : nil
                         }

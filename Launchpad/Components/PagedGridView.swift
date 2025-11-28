@@ -20,6 +20,7 @@ struct PagedGridView: View {
    @State private var sortOrder: SortOrder = SortOrder.defaultLayout
    @State private var selectedCategory: Category?
    @State private var isEditMode = false
+   @State private var isAppearing = false
 
    private var totalPages: Int {
       return pages.count + 1  // +1 for category page
@@ -57,6 +58,7 @@ struct PagedGridView: View {
                         pageIndex: pageIndex,
                         settings: settingsManager.settings,
                         isFolderOpen: selectedFolder != nil,
+                        isAppearing: isAppearing,
                         onItemTap: handleTap
                      )
                      .frame(width: geo.size.width, height: geo.size.height)
@@ -83,7 +85,10 @@ struct PagedGridView: View {
             settings: settingsManager.settings
          )
       }
-      .onAppear(perform: setupEventMonitoring)
+      .onAppear {
+         setupEventMonitoring()
+         triggerFloatInAnimation()
+      }
       .onDisappear(perform: cleanupEventMonitoring)
       .onChange(of: searchText) {
          selectedSearchIndex = 0
@@ -410,6 +415,21 @@ struct PagedGridView: View {
 
       if !SettingsManager.shared.settings.isActivated {
          showSettings = true
+      }
+      
+      triggerFloatInAnimation()
+   }
+   
+   /// Triggers the float-in animation for grid icons.
+   /// Icons instantly reset to their initial hidden state, then animate into view.
+   private func triggerFloatInAnimation() {
+      withAnimation(.linear(duration: 0)) {
+         isAppearing = false
+      }
+      DispatchQueue.main.asyncAfter(deadline: .now() + LaunchpadConstants.floatInInitialDelay) {
+         withAnimation(LaunchpadConstants.floatInAnimation) {
+            isAppearing = true
+         }
       }
    }
 }

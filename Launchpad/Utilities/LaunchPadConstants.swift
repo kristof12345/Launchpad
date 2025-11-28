@@ -10,6 +10,13 @@ class LaunchpadConstants {
    static let easeOutAnimation = Animation.easeOut(duration: 0.2)
    static let jiggleAnimation = Animation.easeInOut(duration: 0.2).repeatForever(autoreverses: true)
    static let dragDropAnimation = Animation.spring(response: 0.3, dampingFraction: 1.0)
+   static let floatInAnimation = Animation.spring(response: 0.5, dampingFraction: 0.7)
+   
+   // MARK: - Float-In Animation Constants
+   static let floatInInitialScale: CGFloat = 0.5
+   static let floatInInitialOffset: CGFloat = 40
+   static let floatInStaggerDelay: Double = 0.02
+   static let floatInInitialDelay: Double = 0.1
 
    // MARK: - Layout Constants
    static let folderPreviewCount = 9 // Apps shown in folder preview (3x3 grid)
