@@ -22,7 +22,7 @@ struct SinglePageView: View {
                 Color.clear
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        // Background clicked
+                        // Empty handler to make the layer tappable
                     }
                     .simultaneousGesture(
                         DragGesture(minimumDistance: 0)
