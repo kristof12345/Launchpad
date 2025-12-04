@@ -16,6 +16,7 @@ struct LaunchpadSettings: Codable, Equatable {
    var scrollDebounceInterval: TimeInterval
    var scrollActivationThreshold: Double
    var enableIconAnimation: Bool
+   var enableFadeAnimation: Bool
 
    // MARK: - Display & Appearance
    var showDock: Bool
@@ -48,6 +49,7 @@ struct LaunchpadSettings: Codable, Equatable {
    static let defaultScrollActivationThreshold: Double = 80.0
    static let defaultTransparency: Double = 1.0
    static let defaultEnableIconAnimation = true
+   static let defaultEnableFadeAnimation = true
    static let defaultStartAtLogin = false
    static let defaultResetOnRelaunch = true
    static let defaultShowDock = true
@@ -71,6 +73,7 @@ struct LaunchpadSettings: Codable, Equatable {
       scrollDebounceInterval: TimeInterval = defaultScrollDebounceInterval,
       scrollActivationThreshold: Double = defaultScrollActivationThreshold,
       enableIconAnimation: Bool = defaultEnableIconAnimation,
+      enableFadeAnimation: Bool = defaultEnableFadeAnimation,
       showDock: Bool = defaultShowDock,
       transparency: Double = defaultTransparency,
       showIconsInSearch: Bool = defaultShowIconsInSearch,
@@ -98,6 +101,7 @@ struct LaunchpadSettings: Codable, Equatable {
       self.scrollDebounceInterval = scrollDebounceInterval
       self.scrollActivationThreshold = scrollActivationThreshold
       self.enableIconAnimation = enableIconAnimation
+      self.enableFadeAnimation = enableFadeAnimation
 
       // Appearance
       self.transparency = max(0.0, min(2.0, transparency))

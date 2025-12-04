@@ -31,6 +31,7 @@
 "reset_on_relaunch" = "Reset search on Relaunch";
 "show_icons_in_search" = "Show ordering options";
 "enable_icon_animation" = "Enable Icon Animation";
+"enable_fade_animation" = "Enable Fade In/Out Animation";
 "transparency" = "Transparency";
 "label_font_color" = "Label Font Color";
 
