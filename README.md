@@ -58,6 +58,7 @@ If you like this project and want to support further development:
 #### 🖱️ **Mouse & Trackpad**
 - Click page dots for direct navigation
 - Scroll horizontally (trackpad swipe) or vertically (mouse wheel) to change pages
+- Click and drag left/right to swipe between pages (similar to macOS Launchpad)
 - Vertical scrolling in search mode
 - Click inside folders without closing app
 
