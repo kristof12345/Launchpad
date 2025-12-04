@@ -20,13 +20,14 @@ struct PagedGridView: View {
    @State private var sortOrder: SortOrder = SortOrder.defaultLayout
    @State private var selectedCategory: Category?
    @State private var isEditMode = false
-   
+
    // Mouse drag state
    @State private var isMouseDragging = false
    @State private var dragStartPage = 0
    @State private var dragOffset: CGFloat = 0
    @State private var pageWidth: CGFloat = 0
-   
+   @State private var hoveredItem: AppGridItem? = nil
+
    // Mouse drag constants
    private let dragInitiationThreshold: CGFloat = 10  // Minimum movement to start drag
    private let pageChangeThreshold: CGFloat = 100     // Minimum drag distance to change page
@@ -64,6 +65,7 @@ struct PagedGridView: View {
                            pages: $pages,
                            draggedItem: $draggedItem,
                            isEditMode: $isEditMode,
+                           hoveredItem: $hoveredItem,
                            canEdit: sortOrder == .defaultLayout,
                            pageIndex: pageIndex,
                            settings: settingsManager.settings,
@@ -126,7 +128,7 @@ struct PagedGridView: View {
          transparency: settingsManager.settings.transparency
       )
    }
-   
+
    private func calculatePageOffset(width: CGFloat) -> CGFloat {
       -CGFloat(currentPage) * width + dragOffset
    }
@@ -222,24 +224,24 @@ struct PagedGridView: View {
 
       let now = Date()
       let timeSinceLastScroll = now.timeIntervalSince(lastScrollTime)
-      
+
       // Detect new gesture: reset accumulation if enough time passed, but keep the page change flag longer
       if timeSinceLastScroll > 0.3 {
          accumulatedScrollX = 0
          accumulatedScrollY = 0
       }
-      
+
       // Only reset the page change flag after a longer pause (gesture truly ended)
       if event.phase == .began || event.phase == .ended || event.phase == .cancelled || timeSinceLastScroll > 0.8 {
          hasChangedPageInCurrentGesture = false
       }
-      
+
       // If we already changed page in this gesture, ignore further scrolling
       guard !hasChangedPageInCurrentGesture else { return event }
-      
+
       // Update last scroll time
       lastScrollTime = now
-      
+
       // Determine which direction has more movement and accumulate accordingly
       if absX >= absY {
          // Horizontal scroll (trackpad swipe)
@@ -282,47 +284,52 @@ struct PagedGridView: View {
 
    private func handleMouseDown(event: NSEvent) -> NSEvent? {
       guard searchText.isEmpty && selectedFolder == nil && selectedCategory == nil && showSettings == false else { return event }
-      
+
       // Only initiate drag if not clicking on an app item (allow normal drag-and-drop)
       guard draggedItem == nil else { return event }
-      
+
+      // Only initiate drag if clicking on background
+      guard hoveredItem == nil else { return event }
+
       dragOffset = 0
       dragStartPage = currentPage
       isMouseDragging = false  // Don't set to true yet, wait for actual drag
-      
+
       return event
    }
-   
+
    private func handleMouseDragged(event: NSEvent) -> NSEvent? {
       guard searchText.isEmpty && selectedFolder == nil && selectedCategory == nil && showSettings == false else { return event }
-      
+
       // Only handle page dragging if not dragging an app item
       guard draggedItem == nil else { return event }
-      
+
       dragOffset += event.deltaX
       if pageWidth > 0 {
          let limit = pageWidth * 1.2  // Allow slight rubber-banding
          dragOffset = min(max(dragOffset, -limit), limit)
       }
-      
+
       if !isMouseDragging && abs(dragOffset) > dragInitiationThreshold {
          isMouseDragging = true
       }
-      
+
       return isMouseDragging ? nil : event
    }
-   
+
    private func handleMouseUp(event: NSEvent) -> NSEvent? {
-      guard searchText.isEmpty && selectedFolder == nil && selectedCategory == nil && showSettings == false else { 
+      guard searchText.isEmpty && selectedFolder == nil && selectedCategory == nil && showSettings == false else {
          isMouseDragging = false
          dragOffset = 0
-         return event 
+         return event
       }
-      
+
       // Only handle if we were in a drag gesture
-      guard isMouseDragging else { return event }
+      guard isMouseDragging else {
+         return event
+      }
       isMouseDragging = false
-      
+
       let width = pageWidth > 0 ? pageWidth : pageChangeThreshold
       let threshold = max(width * 0.15, 60)
       var targetPage = dragStartPage
@@ -336,7 +343,7 @@ struct PagedGridView: View {
          currentPage = targetPage
          dragOffset = 0
       }
-      
+
       return nil
    }
 
@@ -476,7 +483,7 @@ struct PagedGridView: View {
 
       selectedSearchIndex = NavigationHelper.navigateUp(currentIndex: selectedSearchIndex, itemCount: apps.count, columns: settingsManager.settings.columns)
    }
-   
+
    private func navigateSearchDown() {
       let apps = filteredApps()
       guard !apps.isEmpty else { return }
