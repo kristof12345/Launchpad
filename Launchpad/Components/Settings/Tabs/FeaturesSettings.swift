@@ -42,6 +42,11 @@ struct FeaturesSettings: View {
                isOn: $settings.enableIconAnimation
             )
             
+            SettingsToggle(
+               title: L10n.enableFadeAnimation,
+               isOn: $settings.enableFadeAnimation
+            )
+            
             SettingsSlider(
                title: L10n.dropAnimationDelay,
                value: $settings.dropDelay,

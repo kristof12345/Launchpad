@@ -31,6 +31,7 @@
 "reset_on_relaunch" = "Keresés törlése újraindításkor";
 "show_icons_in_search" = "Rendezés megjelenítése";
 "enable_icon_animation" = "Ikon animáció";
+"enable_fade_animation" = "Áttűnés animáció";
 "transparency" = "Átlátszóság";
 "label_font_color" = "Felirat betűszín";
 

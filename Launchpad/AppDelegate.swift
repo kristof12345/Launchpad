@@ -3,6 +3,7 @@ import AppKit
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
    private var isCurrentlyHidden = false
+   static var onExitRequested: (() -> Void)?
    
    func applicationDidHide(_ notification: Notification) {
       print("Hiding Launchpad.")
@@ -14,7 +15,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
       if isCurrentlyHidden {
          isCurrentlyHidden = false
       } else {
-         AppLauncher.exit()
+         // Request exit animation instead of immediately hiding
+         if let onExitRequested = AppDelegate.onExitRequested {
+            onExitRequested()
+         } else {
+            NSApp.hide(nil)
+         }
       }
       
       return true

@@ -42,6 +42,7 @@ struct L10n {
    static let resetOnRelaunch = "reset_on_relaunch".localized
    static let showIconsInSearch = "show_icons_in_search".localized
    static let enableIconAnimation = "enable_icon_animation".localized
+   static let enableFadeAnimation = "enable_fade_animation".localized
    static let transparency = "transparency".localized
    static let labelFontColor = "label_font_color".localized
    
