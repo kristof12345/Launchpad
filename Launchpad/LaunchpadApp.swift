@@ -59,15 +59,16 @@ struct LaunchpadApp: App {
          forName: NSApplication.didBecomeActiveNotification,
          object: nil,
          queue: .main
-      ) { [self] _ in
+      ) { [weak self] _ in
+         guard let self = self else { return }
          // Fade in when app becomes active
-         if windowOpacity < 1.0 {
-            if settingsManager.settings.enableFadeAnimation {
+         if self.windowOpacity < 1.0 {
+            if self.settingsManager.settings.enableFadeAnimation {
                DispatchQueue.main.async {
-                  windowOpacity = 1.0
+                  self.windowOpacity = 1.0
                }
             } else {
-               windowOpacity = 1.0
+               self.windowOpacity = 1.0
             }
          }
       }
@@ -77,7 +78,7 @@ struct LaunchpadApp: App {
       if settingsManager.settings.enableFadeAnimation && windowOpacity > 0 {
          // Fade out before hiding
          windowOpacity = 0.0
-         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+         DispatchQueue.main.asyncAfter(deadline: .now() + LaunchpadConstants.fadeAnimationDuration) {
             AppLauncher.hideImmediately()
          }
       } else {
