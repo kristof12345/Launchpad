@@ -26,6 +26,7 @@ struct PagedGridView: View {
    @State private var dragStartPage = 0
    @State private var dragOffset: CGFloat = 0
    @State private var pageWidth: CGFloat = 0
+   @State private var allowBackgroundDrag = false
    
    // Mouse drag constants
    private let dragInitiationThreshold: CGFloat = 10  // Minimum movement to start drag
@@ -64,6 +65,7 @@ struct PagedGridView: View {
                            pages: $pages,
                            draggedItem: $draggedItem,
                            isEditMode: $isEditMode,
+                           allowBackgroundDrag: $allowBackgroundDrag,
                            canEdit: sortOrder == .defaultLayout,
                            pageIndex: pageIndex,
                            settings: settingsManager.settings,
@@ -286,6 +288,9 @@ struct PagedGridView: View {
       // Only initiate drag if not clicking on an app item (allow normal drag-and-drop)
       guard draggedItem == nil else { return event }
       
+      // Only initiate drag if clicking on background
+      guard allowBackgroundDrag else { return event }
+      
       dragOffset = 0
       dragStartPage = currentPage
       isMouseDragging = false  // Don't set to true yet, wait for actual drag
@@ -316,12 +321,17 @@ struct PagedGridView: View {
       guard searchText.isEmpty && selectedFolder == nil && selectedCategory == nil && showSettings == false else { 
          isMouseDragging = false
          dragOffset = 0
+         allowBackgroundDrag = false
          return event 
       }
       
       // Only handle if we were in a drag gesture
-      guard isMouseDragging else { return event }
+      guard isMouseDragging else { 
+         allowBackgroundDrag = false
+         return event 
+      }
       isMouseDragging = false
+      allowBackgroundDrag = false
       
       let width = pageWidth > 0 ? pageWidth : pageChangeThreshold
       let threshold = max(width * 0.15, 60)
